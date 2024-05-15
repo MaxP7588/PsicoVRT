@@ -18,6 +18,10 @@ public class TomarObjeto : MonoBehaviour
             pickObject.GetComponent<Rigidbody>().isKinematic = false;
 
             pickObject.gameObject.transform.SetParent(null);
+            if (pickObject.name == "Key")
+            {
+                pickObject.gameObject.GetComponent<Key>().takeObjet = true;
+            }
 
             pickObject = null;
         }
@@ -32,6 +36,10 @@ public class TomarObjeto : MonoBehaviour
                 other.transform.position = handPoint.transform.position;
 
                 other.gameObject.transform.SetParent(handPoint.gameObject.transform);
+                if (other.name == "Key")
+                {
+                    other.gameObject.GetComponent<Key>().takeObjet = false;
+                }
                 pickObject = other.gameObject;
             }
         }
