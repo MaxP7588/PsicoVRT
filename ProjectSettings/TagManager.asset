@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Objeto
+  - DoorKey
   layers:
   - Default
   - TransparentFX
