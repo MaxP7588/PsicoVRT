@@ -7,6 +7,7 @@ public class TomarObjeto : MonoBehaviour
 {
     public GameObject handPoint;
     private GameObject pickObject = null;
+    public Camera cam;
 
     public 
 
@@ -21,6 +22,7 @@ public class TomarObjeto : MonoBehaviour
             if (pickObject.name == "Key")
             {
                 pickObject.gameObject.GetComponent<Key>().takeObjet = true;
+                pickObject.transform.rotation = Quaternion.Euler(-90, 90, 0);
             }
 
             pickObject = null;
@@ -39,6 +41,10 @@ public class TomarObjeto : MonoBehaviour
                 if (other.name == "Key")
                 {
                     other.gameObject.GetComponent<Key>().takeObjet = false;
+                    Vector3 direction = cam.transform.forward;
+                    direction.y = 0; // Asegurarse de que la dirección sea horizontal
+                    Quaternion targetRotation = Quaternion.LookRotation(direction);
+                    other.transform.rotation = targetRotation * Quaternion.Euler(180, 0, 0);
                 }
                 pickObject = other.gameObject;
             }

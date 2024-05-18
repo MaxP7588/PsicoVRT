@@ -20,7 +20,6 @@ public class RotarCamaraJoystick : MonoBehaviour
     {
         if(Input.GetAxis(HorizontalDerecha)==1 || Input.GetAxis(HorizontalDerecha) == -1)
         {
-            Debug.Log(Input.GetAxis(HorizontalDerecha));
             // Obtiene la entrada horizontal y vertical del joystick
             float Horizontal = Input.GetAxis(HorizontalDerecha);
 
