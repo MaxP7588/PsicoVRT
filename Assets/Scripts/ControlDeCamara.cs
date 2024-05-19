@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class CharacterController : MonoBehaviour
 {
-    public float speed = 8f;
+    public float speed = 3f;
+    public float climbSpeed = 2f; // Velocidad de subida de escaleras
     public Transform cameraTransform; // Referencia a la transformación de la cámara
     private Rigidbody rb;
+    private bool isClimbing = false; // Indica si el personaje está subiendo una escalera
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        // Asegúrate de que el Rigidbody no sea kinemático
         rb.isKinematic = false;
+        rb.useGravity = true;
     }
 
     void Update()
@@ -30,7 +32,34 @@ public class CharacterController : MonoBehaviour
 
         Vector3 movement = (forward * verticalInput + right * horizontalInput) * speed * Time.deltaTime;
 
-        // Aplicar el movimiento usando MovePosition
-        rb.MovePosition(transform.position + movement);
+        if (isClimbing)
+        {
+            // Movimiento en escalera
+            Vector3 climbMovement = new Vector3(horizontalInput, verticalInput, 0) * climbSpeed * Time.deltaTime;
+            rb.MovePosition(transform.position + climbMovement);
+            rb.useGravity = false; // Desactiva la gravedad mientras sube la escalera
+        }
+        else
+        {
+            // Movimiento normal
+            rb.MovePosition(transform.position + movement);
+            rb.useGravity = true; // Asegura que la gravedad esté activa cuando no está en una escalera
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Escalera"))
+        {
+            isClimbing = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Escalera"))
+        {
+            isClimbing = false;
+        }
     }
 }
