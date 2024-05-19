@@ -13658,7 +13658,7 @@ GameObject:
   - component: {fileID: 526260236}
   - component: {fileID: 526260235}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: minimap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13743,12 +13743,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 526260234}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.95, y: 1.48, z: 131.63}
-  m_LocalScale: {x: 0.86549, y: 0.95594, z: 0.080038}
+  m_LocalRotation: {x: -0.00034529547, y: 0.99999994, z: -0, w: 0}
+  m_LocalPosition: {x: -0.994, y: -0.228, z: 0.942}
+  m_LocalScale: {x: 0.86549, y: 0.95594, z: 0.001}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1690209565}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &530605104
 GameObject:
@@ -32257,7 +32257,7 @@ GameObject:
   - component: {fileID: 1286295500}
   - component: {fileID: 1286295499}
   - component: {fileID: 1286295498}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cabeza
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32273,8 +32273,8 @@ Transform:
   m_GameObject: {fileID: 1286295496}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 0.04, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.00000095367, y: 0.04, z: 0}
+  m_LocalScale: {x: 2.3724487, y: 2.3724487, z: 2.3724487}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 260464219}
@@ -32320,7 +32320,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 3814a6e7952f4e145b53d97b1084abc9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -42228,6 +42228,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1501000958}
+  - {fileID: 526260238}
   - {fileID: 737814473}
   m_Father: {fileID: 260464219}
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
@@ -42362,7 +42363,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 55
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -53921,4 +53922,3 @@ SceneRoots:
   - {fileID: 620973228}
   - {fileID: 1111637372}
   - {fileID: 221643906}
-  - {fileID: 526260238}
