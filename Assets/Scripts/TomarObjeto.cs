@@ -42,7 +42,7 @@ public class TomarObjeto : MonoBehaviour
                 {
                     other.gameObject.GetComponent<Key>().takeObjet = false;
                     Vector3 direction = cam.transform.forward;
-                    direction.y = 0; // Asegurarse de que la dirección sea horizontal
+                    direction.y = 0; 
                     Quaternion targetRotation = Quaternion.LookRotation(direction);
                     other.transform.rotation = targetRotation * Quaternion.Euler(180, 0, 0);
                 }
