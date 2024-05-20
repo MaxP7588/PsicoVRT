@@ -9,6 +9,7 @@ public class Key : MonoBehaviour {
     public GameObject key;
     public GameObject keyPoofPrefab;
     public Door door;
+    public GameObject puntoKey;
 
 	void Update () {
 
@@ -18,8 +19,7 @@ public class Key : MonoBehaviour {
             currentPosition.y = 2 + Mathf.Sin(Time.time * 2.0f);
             key.transform.position = currentPosition;
         }
-        
-        
+
     }
 
     private void OnTriggerStay(Collider other)
@@ -34,8 +34,13 @@ public class Key : MonoBehaviour {
         }
     }
 
-    public void OnKeyClicked () {
+    public void verPunto()
+    {
+        puntoKey.SetActive(true);
+    }
 
-        
+    public void ocultarPunto()
+    {
+        puntoKey.SetActive(false);
     }
 }

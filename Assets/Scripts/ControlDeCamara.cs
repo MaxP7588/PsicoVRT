@@ -49,17 +49,18 @@ public class CharacterController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Escalera"))
+        /*if (other.gameObject.CompareTag("Escalera"))
         {
             isClimbing = true;
-        }
+        }*/
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("Escalera"))
+        /*if (other.gameObject.CompareTag("Escalera"))
         {
             isClimbing = false;
         }
+        */
     }
 }
