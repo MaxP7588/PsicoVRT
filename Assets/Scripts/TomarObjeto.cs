@@ -13,7 +13,7 @@ public class TomarObjeto : MonoBehaviour
 
      void Update()
     {
-        if (Input.GetKey(KeyCode.JoystickButton3))
+        if (Input.GetKey(KeyCode.JoystickButton3))//SOLTAR UN OBJETO
         {
             pickObject.GetComponent<Rigidbody>().useGravity = true;
             pickObject.GetComponent<Rigidbody>().isKinematic = false;
@@ -23,13 +23,14 @@ public class TomarObjeto : MonoBehaviour
             {
                 pickObject.gameObject.GetComponent<Key>().takeObjet = true;
                 pickObject.transform.rotation = Quaternion.Euler(-90, 90, 0);
+                pickObject.gameObject.GetComponent<Key>().verPunto();
             }
 
             pickObject = null;
         }
     }
 
-    private void OnTriggerStay(Collider other) {
+    private void OnTriggerStay(Collider other) {//TOMAR UN OBJETO
         if(other.gameObject.CompareTag("Objeto")){
             if(Input.GetKey(KeyCode.JoystickButton2) && pickObject == null){
                 other.GetComponent<Rigidbody>().useGravity = false;
@@ -45,6 +46,7 @@ public class TomarObjeto : MonoBehaviour
                     direction.y = 0; 
                     Quaternion targetRotation = Quaternion.LookRotation(direction);
                     other.transform.rotation = targetRotation * Quaternion.Euler(180, 0, 0);
+                    other.gameObject.GetComponent<Key>().ocultarPunto();
                 }
                 pickObject = other.gameObject;
             }
