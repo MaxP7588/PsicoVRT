@@ -2,19 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterController : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     public float speed = 3f;
     public float climbSpeed = 2f; // Velocidad de subida de escaleras
     public Transform cameraTransform; // Referencia a la transformación de la cámara
-    private Rigidbody rb;
+    private CharacterController characterController;
     private bool isClimbing = false; // Indica si el personaje está subiendo una escalera
+    private Vector3 velocity;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        rb.isKinematic = false;
-        rb.useGravity = true;
+        characterController = GetComponent<CharacterController>();
     }
 
     void Update()
@@ -30,37 +29,47 @@ public class CharacterController : MonoBehaviour
         forward.Normalize();
         right.Normalize();
 
-        Vector3 movement = (forward * verticalInput + right * horizontalInput) * speed * Time.deltaTime;
+        Vector3 movement = (forward * verticalInput + right * horizontalInput) * speed;
 
         if (isClimbing)
         {
             // Movimiento en escalera
-            Vector3 climbMovement = new Vector3(horizontalInput, verticalInput, 0) * climbSpeed * Time.deltaTime;
-            rb.MovePosition(transform.position + climbMovement);
-            rb.useGravity = false; // Desactiva la gravedad mientras sube la escalera
+            Vector3 climbMovement = new Vector3(horizontalInput, verticalInput, 0) * climbSpeed;
+            characterController.Move(climbMovement * Time.deltaTime);
         }
         else
         {
             // Movimiento normal
-            rb.MovePosition(transform.position + movement);
-            rb.useGravity = true; // Asegura que la gravedad esté activa cuando no está en una escalera
+            characterController.Move(movement * Time.deltaTime);
         }
+
+        // Aplicar gravedad manualmente
+        if (!characterController.isGrounded && !isClimbing)
+        {
+            velocity.y += Physics.gravity.y * Time.deltaTime;
+        }
+        else if (characterController.isGrounded && velocity.y < 0)
+        {
+            velocity.y = -2f; // Valor pequeño negativo para asegurar que el CharacterController esté pegado al suelo
+        }
+
+        characterController.Move(velocity * Time.deltaTime);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        /*if (other.gameObject.CompareTag("Escalera"))
+        if (other.gameObject.CompareTag("Escalera"))
         {
             isClimbing = true;
-        }*/
+            velocity = Vector3.zero; // Reiniciar la velocidad cuando empieza a escalar
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        /*if (other.gameObject.CompareTag("Escalera"))
+        if (other.gameObject.CompareTag("Escalera"))
         {
             isClimbing = false;
         }
-        */
     }
 }
