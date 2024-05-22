@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Objeto
   - DoorKey
+  - MesaObj
   layers:
   - Default
   - TransparentFX
