@@ -52,5 +52,14 @@ public class TomarObjeto : MonoBehaviour
             }
         }
     }
+
+    public bool hayObjetoTomado()
+    {
+        if(pickObject == null)
+        {
+            return false;
+        }
+        return true;
+    }
 }
 
