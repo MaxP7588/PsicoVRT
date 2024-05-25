@@ -1,30 +1,45 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
 public class MemoryTest : MonoBehaviour
 {
     public List<GameObject> objectsToHide; // Lista de objetos en la escena
     public GameObject curtain; // Cortina que se cierra y abre
-    public float initialViewTime = 5.0f; // Tiempo que se muestran los 3 objetos al principio
+    public float initialViewTime = 5.0f; // Tiempo que se muestran los objetos al principio
     public float curtainCloseTime = 2.0f; // Tiempo que la cortina permanece cerrada
+    public GameObject player; // El objeto del jugador
+    public Camera playerCamera; // La cámara del jugador
 
-    private List<Transform> posicionOriginal; //lista de la posicion de cada objeto para devolverlo a su sitio
+    private Vector3 initialPlayerPosition = new Vector3(-1.55f, 1.0f, 0.0f); // Posición inicial del jugador
+    private Quaternion initialPlayerRotation = Quaternion.Euler(0f, -180f, 0f); // Rotación inicial del jugador
+    private List<Vector3> posicionesOriginales; // Lista de la posición de cada objeto para devolverlo a su sitio
+    private List<Quaternion> rotacionesOriginales; // Lista de la rotación de cada objeto para devolverlo a su sitio
     private List<GameObject> shownObjects; // Lista de objetos que se mostrarán inicialmente
     private GameObject newObject; // Nuevo objeto que aparecerá después
     private int numObjetos;
     private NivelJuegoMemoria memoria;
+    private textoEnPantalla textoEnPantalla;
+    private PlayerController playerController; // Controlador del jugador
+
     void Start()
     {
         // Asegurarse de que la cortina está inicialmente abierta
         curtain.SetActive(false);
         shownObjects = new List<GameObject>();
         memoria = FindObjectOfType<NivelJuegoMemoria>();
+        playerController = player.GetComponent<PlayerController>();
 
-        foreach(GameObject obj in objectsToHide) {
-            posicionOriginal.Add(obj.transform);
+        posicionesOriginales = new List<Vector3>(); // Inicializar la lista de posiciones originales
+        rotacionesOriginales = new List<Quaternion>(); // Inicializar la lista de rotaciones originales
+        foreach (GameObject obj in objectsToHide)
+        {
+            posicionesOriginales.Add(obj.transform.position);
+            rotacionesOriginales.Add(obj.transform.rotation);
         }
+        textoEnPantalla = FindObjectOfType<textoEnPantalla>();
+
     }
 
     private void Update()
@@ -44,12 +59,19 @@ public class MemoryTest : MonoBehaviour
         }
         else
         {
-            Debug.Log("no ha seleccionado nivel");
+            textoEnPantalla.setTextoPantalla("Seleccione nivel");
         }
     }
 
     private IEnumerator MemoryTestCoroutine()
     {
+        // Desactivar el control del jugador
+        playerController.enabled = false;
+
+        // Teletransportar al jugador a la posición y rotación iniciales
+        player.transform.position = initialPlayerPosition;
+        playerCamera.transform.rotation = initialPlayerRotation;
+
         // Asegurarse de que la lista está vacía al inicio de cada prueba
         shownObjects.Clear();
 
@@ -60,9 +82,9 @@ public class MemoryTest : MonoBehaviour
 
         // Cerrar la cortina
         curtain.SetActive(true);
-        yield return new WaitForSeconds(curtainCloseTime-1);
+        yield return new WaitForSeconds(curtainCloseTime - 1);
 
-        // Escoger 3 objetos al azar para mostrar inicialmente
+        // Escoger objetos al azar para mostrar inicialmente
         List<int> selectedIndices = new List<int>();
         while (selectedIndices.Count < numObjetos)
         {
@@ -74,7 +96,7 @@ public class MemoryTest : MonoBehaviour
             }
         }
 
-        // Mostrar los 3 objetos
+        // Mostrar los objetos
         foreach (GameObject obj in shownObjects)
         {
             obj.SetActive(true);
@@ -82,13 +104,12 @@ public class MemoryTest : MonoBehaviour
 
         curtain.SetActive(false);
 
-        // Esperar 5 segundos para que el jugador vea los objetos
+        // Esperar para que el jugador vea los objetos
         yield return new WaitForSeconds(initialViewTime);
 
         // Cerrar la cortina
         curtain.SetActive(true);
         yield return new WaitForSeconds(curtainCloseTime);
-
 
         // Seleccionar un nuevo objeto que no esté en la lista de mostrados
         List<int> remainingIndices = new List<int>();
@@ -103,12 +124,14 @@ public class MemoryTest : MonoBehaviour
         int newObjectIndex = remainingIndices[Random.Range(0, remainingIndices.Count)];
         newObject = objectsToHide[newObjectIndex];
 
-
         // Mostrar el nuevo objeto
         newObject.SetActive(true);
 
         // Abrir la cortina
         curtain.SetActive(false);
+
+        // Reactivar el control del jugador
+        playerController.enabled = true;
     }
 
     public void ShowInitialObjects()
@@ -133,10 +156,16 @@ public class MemoryTest : MonoBehaviour
 
     public void reiniciar()
     {
-        int cont = 0;
-        foreach(GameObject obj in shownObjects)
+        for (int i = 0; i < objectsToHide.Count; i++)
         {
-            //obj.gameObject.transform.
+            // Regresar a su posición y rotación originales
+            objectsToHide[i].transform.position = posicionesOriginales[i];
+            objectsToHide[i].transform.rotation = rotacionesOriginales[i];
+            objectsToHide[i].SetActive(false);
         }
+
+        newObject = null;
+        shownObjects.Clear();
     }
+
 }
