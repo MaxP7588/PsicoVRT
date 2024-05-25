@@ -11,7 +11,11 @@ public class MemoryTest : MonoBehaviour
     public float curtainCloseTime = 2.0f; // Tiempo que la cortina permanece cerrada
     public TextMeshProUGUI nivelNoSeleccionadoTexto; // Objeto TextMeshPro para mostrar el mensaje
     public float fadeDuration = 2.0f; // Duración del desvanecimiento
+    public GameObject player; // El objeto del jugador
+    public Camera playerCamera; // La cámara del jugador
 
+    private Vector3 initialPlayerPosition = new Vector3(-1.55f, 1.0f, 0.0f); // Posición inicial del jugador
+    private Quaternion initialPlayerRotation = Quaternion.Euler(0f, -180f, 0f); // Rotación inicial del jugador
     private List<Vector3> posicionesOriginales; // Lista de la posición de cada objeto para devolverlo a su sitio
     private List<Quaternion> rotacionesOriginales; // Lista de la rotación de cada objeto para devolverlo a su sitio
     private List<GameObject> shownObjects; // Lista de objetos que se mostrarán inicialmente
@@ -19,6 +23,7 @@ public class MemoryTest : MonoBehaviour
     private int numObjetos;
     private NivelJuegoMemoria memoria;
     private Coroutine fadeCoroutine;
+    private PlayerController playerController; // Controlador del jugador
 
     void Start()
     {
@@ -26,6 +31,7 @@ public class MemoryTest : MonoBehaviour
         curtain.SetActive(false);
         shownObjects = new List<GameObject>();
         memoria = FindObjectOfType<NivelJuegoMemoria>();
+        playerController = player.GetComponent<PlayerController>();
 
         posicionesOriginales = new List<Vector3>(); // Inicializar la lista de posiciones originales
         rotacionesOriginales = new List<Quaternion>(); // Inicializar la lista de rotaciones originales
@@ -77,6 +83,13 @@ public class MemoryTest : MonoBehaviour
 
     private IEnumerator MemoryTestCoroutine()
     {
+        // Desactivar el control del jugador
+        playerController.enabled = false;
+
+        // Teletransportar al jugador a la posición y rotación iniciales
+        player.transform.position = initialPlayerPosition;
+        playerCamera.transform.rotation = initialPlayerRotation;
+
         // Asegurarse de que la lista está vacía al inicio de cada prueba
         shownObjects.Clear();
 
@@ -134,6 +147,9 @@ public class MemoryTest : MonoBehaviour
 
         // Abrir la cortina
         curtain.SetActive(false);
+
+        // Reactivar el control del jugador
+        playerController.enabled = true;
     }
 
     public void ShowInitialObjects()
