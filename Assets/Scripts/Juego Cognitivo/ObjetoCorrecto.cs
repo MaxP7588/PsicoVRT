@@ -25,6 +25,7 @@ public class ObjetoCorrecto : MonoBehaviour
                 {
                     other.gameObject.SetActive(false);
                     Debug.Log("¡Encontraste el nuevo objeto!");
+                    memoryTest.reiniciar();
                 }
                 else
                 {
