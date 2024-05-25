@@ -8,7 +8,14 @@ public class NivelJuegoMemoria : MonoBehaviour
     public GameObject botonMedio;
     public GameObject botonDificil;
 
+    private textoEnPantalla text;
+
     private int nivel;
+
+    private void Start()
+    {
+        text = FindAnyObjectByType<textoEnPantalla>();
+    }
 
     public void cambioDificultad(GameObject botonSwitch)
     {
@@ -16,18 +23,21 @@ public class NivelJuegoMemoria : MonoBehaviour
             botonMedio.gameObject.GetComponent<PresionarBoton>().apagar();
             botonDificil.gameObject.GetComponent<PresionarBoton>().apagar();
             nivel = 3;
+            text.setTextoPantalla("Nivel Facil");
         }
         else if (botonSwitch.gameObject == botonMedio.gameObject)
         {
             botonFacil.gameObject.GetComponent<PresionarBoton>().apagar();
             botonDificil.gameObject.GetComponent<PresionarBoton>().apagar();
             nivel = 5;
+            text.setTextoPantalla("Nivel Medio");
         }
         else if (botonSwitch.gameObject == botonDificil.gameObject)
         {
             botonFacil.gameObject.GetComponent<PresionarBoton>().apagar();
             botonMedio.gameObject.GetComponent<PresionarBoton>().apagar();
             nivel = 7;
+            text.setTextoPantalla("Nivel Dificil");
         }
     }
 
