@@ -9,57 +9,73 @@ public class TomarObjeto : MonoBehaviour
     private GameObject pickObject = null;
     public Camera cam;
 
-    public 
+    private bool buttonPressed = false;
 
-     void Update()
+    void Update()
     {
-        if (Input.GetKey(KeyCode.JoystickButton3))//SOLTAR UN OBJETO
+        if (Input.GetKey(KeyCode.JoystickButton3)) // SOLTAR UN OBJETO
         {
-            pickObject.GetComponent<Rigidbody>().useGravity = true;
-            pickObject.GetComponent<Rigidbody>().isKinematic = false;
-
-            pickObject.gameObject.transform.SetParent(null);
-            if (pickObject.name == "Key")
+            if (pickObject != null)
             {
-                pickObject.gameObject.GetComponent<Key>().takeObjet = true;
-                pickObject.transform.rotation = Quaternion.Euler(-90, 90, 0);
-                pickObject.gameObject.GetComponent<Key>().verPunto();
-            }
+                pickObject.GetComponent<Rigidbody>().useGravity = true;
+                pickObject.GetComponent<Rigidbody>().isKinematic = false;
 
-            pickObject = null;
+                pickObject.gameObject.transform.SetParent(null);
+                if (pickObject.name == "Key")
+                {
+                    pickObject.gameObject.GetComponent<Key>().takeObjet = true;
+                    pickObject.transform.rotation = Quaternion.Euler(-90, 90, 0);
+                    pickObject.gameObject.GetComponent<Key>().verPunto();
+                }
+
+                pickObject = null;
+            }
         }
     }
 
-    private void OnTriggerStay(Collider other) {//TOMAR UN OBJETO
-        if(other.gameObject.CompareTag("Objeto")){
-            if(Input.GetKey(KeyCode.JoystickButton2) && pickObject == null){
-                other.GetComponent<Rigidbody>().useGravity = false;
-                other.GetComponent <Rigidbody>().isKinematic = true;
-
-                other.transform.position = handPoint.transform.position;
-
-                other.gameObject.transform.SetParent(handPoint.gameObject.transform);
-                if (other.name == "Key")
+    private void OnTriggerStay(Collider other)
+    {
+        if (Input.GetKey(KeyCode.JoystickButton2))
+        { 
+            if (other.gameObject.CompareTag("Objeto"))
+            {
+                if (pickObject == null)
                 {
-                    other.gameObject.GetComponent<Key>().takeObjet = false;
-                    Vector3 direction = cam.transform.forward;
-                    direction.y = 0; 
-                    Quaternion targetRotation = Quaternion.LookRotation(direction);
-                    other.transform.rotation = targetRotation * Quaternion.Euler(180, 0, 0);
-                    other.gameObject.GetComponent<Key>().ocultarPunto();
+                    other.GetComponent<Rigidbody>().useGravity = false;
+                    other.GetComponent<Rigidbody>().isKinematic = true;
+
+                    other.transform.position = handPoint.transform.position;
+
+                    other.gameObject.transform.SetParent(handPoint.gameObject.transform);
+                    if (other.name == "Key")
+                    {
+                        other.gameObject.GetComponent<Key>().takeObjet = false;
+                        Vector3 direction = cam.transform.forward;
+                        direction.y = 0;
+                        Quaternion targetRotation = Quaternion.LookRotation(direction);
+                        other.transform.rotation = targetRotation * Quaternion.Euler(180, 0, 0);
+                        other.gameObject.GetComponent<Key>().ocultarPunto();
+                    }
+                    pickObject = other.gameObject;
                 }
-                pickObject = other.gameObject;
             }
+            else if (other.gameObject.CompareTag("Boton"))
+            {
+                if (!buttonPressed)
+                {
+                    buttonPressed = true;
+                    other.gameObject.GetComponent<PresionarBoton>().encender();
+                }
+            }
+        }
+        else
+        {
+            buttonPressed = false;
         }
     }
 
     public bool hayObjetoTomado()
     {
-        if(pickObject == null)
-        {
-            return false;
-        }
-        return true;
+        return pickObject != null;
     }
 }
-

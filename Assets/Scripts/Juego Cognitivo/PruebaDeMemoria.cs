@@ -10,14 +10,21 @@ public class MemoryTest : MonoBehaviour
     public float initialViewTime = 5.0f; // Tiempo que se muestran los 3 objetos al principio
     public float curtainCloseTime = 2.0f; // Tiempo que la cortina permanece cerrada
 
+    private List<Transform> posicionOriginal; //lista de la posicion de cada objeto para devolverlo a su sitio
     private List<GameObject> shownObjects; // Lista de objetos que se mostrarán inicialmente
     private GameObject newObject; // Nuevo objeto que aparecerá después
-
+    private int numObjetos;
+    private NivelJuegoMemoria memoria;
     void Start()
     {
         // Asegurarse de que la cortina está inicialmente abierta
         curtain.SetActive(false);
         shownObjects = new List<GameObject>();
+        memoria = FindObjectOfType<NivelJuegoMemoria>();
+
+        foreach(GameObject obj in objectsToHide) {
+            posicionOriginal.Add(obj.transform);
+        }
     }
 
     private void Update()
@@ -30,7 +37,15 @@ public class MemoryTest : MonoBehaviour
 
     public void StartMemoryTest()
     {
-        StartCoroutine(MemoryTestCoroutine());
+        numObjetos = memoria.elNivelEs();
+        if (numObjetos != 0)
+        {
+            StartCoroutine(MemoryTestCoroutine());
+        }
+        else
+        {
+            Debug.Log("no ha seleccionado nivel");
+        }
     }
 
     private IEnumerator MemoryTestCoroutine()
@@ -49,7 +64,7 @@ public class MemoryTest : MonoBehaviour
 
         // Escoger 3 objetos al azar para mostrar inicialmente
         List<int> selectedIndices = new List<int>();
-        while (selectedIndices.Count < 3)
+        while (selectedIndices.Count < numObjetos)
         {
             int randomIndex = Random.Range(0, objectsToHide.Count);
             if (!selectedIndices.Contains(randomIndex))
@@ -114,5 +129,14 @@ public class MemoryTest : MonoBehaviour
     public GameObject getNewObj()
     {
         return newObject;
+    }
+
+    public void reiniciar()
+    {
+        int cont = 0;
+        foreach(GameObject obj in shownObjects)
+        {
+            //obj.gameObject.transform.
+        }
     }
 }
