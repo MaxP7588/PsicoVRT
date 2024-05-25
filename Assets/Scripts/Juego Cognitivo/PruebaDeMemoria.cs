@@ -9,8 +9,6 @@ public class MemoryTest : MonoBehaviour
     public GameObject curtain; // Cortina que se cierra y abre
     public float initialViewTime = 5.0f; // Tiempo que se muestran los objetos al principio
     public float curtainCloseTime = 2.0f; // Tiempo que la cortina permanece cerrada
-    public TextMeshProUGUI nivelNoSeleccionadoTexto; // Objeto TextMeshPro para mostrar el mensaje
-    public float fadeDuration = 2.0f; // Duración del desvanecimiento
     public GameObject player; // El objeto del jugador
     public Camera playerCamera; // La cámara del jugador
 
@@ -22,7 +20,7 @@ public class MemoryTest : MonoBehaviour
     private GameObject newObject; // Nuevo objeto que aparecerá después
     private int numObjetos;
     private NivelJuegoMemoria memoria;
-    private Coroutine fadeCoroutine;
+    private textoEnPantalla textoEnPantalla;
     private PlayerController playerController; // Controlador del jugador
 
     void Start()
@@ -40,9 +38,8 @@ public class MemoryTest : MonoBehaviour
             posicionesOriginales.Add(obj.transform.position);
             rotacionesOriginales.Add(obj.transform.rotation);
         }
+        textoEnPantalla = FindObjectOfType<textoEnPantalla>();
 
-        // Asegurarse de que el mensaje de nivel no seleccionado esté inicialmente desactivado
-        nivelNoSeleccionadoTexto.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -58,26 +55,11 @@ public class MemoryTest : MonoBehaviour
         numObjetos = memoria.elNivelEs();
         if (numObjetos != 0)
         {
-            // Ocultar el mensaje de nivel no seleccionado
-            if (fadeCoroutine != null)
-            {
-                StopCoroutine(fadeCoroutine);
-            }
-            nivelNoSeleccionadoTexto.gameObject.SetActive(false);
             StartCoroutine(MemoryTestCoroutine());
         }
         else
         {
-            Debug.Log("no ha seleccionado nivel");
-            // Mostrar el mensaje de nivel no seleccionado
-            nivelNoSeleccionadoTexto.text = "Seleccione nivel";
-            nivelNoSeleccionadoTexto.color = new Color(nivelNoSeleccionadoTexto.color.r, nivelNoSeleccionadoTexto.color.g, nivelNoSeleccionadoTexto.color.b, 1f); // Asegurarse de que el texto esté completamente visible
-            nivelNoSeleccionadoTexto.gameObject.SetActive(true);
-            if (fadeCoroutine != null)
-            {
-                StopCoroutine(fadeCoroutine);
-            }
-            fadeCoroutine = StartCoroutine(FadeText());
+            textoEnPantalla.setTextoPantalla("Seleccione nivel");
         }
     }
 
@@ -186,20 +168,4 @@ public class MemoryTest : MonoBehaviour
         shownObjects.Clear();
     }
 
-    private IEnumerator FadeText()
-    {
-        float elapsedTime = 0f;
-        Color originalColor = nivelNoSeleccionadoTexto.color;
-        Color targetColor = new Color(originalColor.r, originalColor.g, originalColor.b, 0f);
-
-        while (elapsedTime < fadeDuration)
-        {
-            nivelNoSeleccionadoTexto.color = Color.Lerp(originalColor, targetColor, elapsedTime / fadeDuration);
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-
-        nivelNoSeleccionadoTexto.color = targetColor;
-        nivelNoSeleccionadoTexto.gameObject.SetActive(false);
-    }
 }
