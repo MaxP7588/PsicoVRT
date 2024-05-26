@@ -6,12 +6,14 @@ public class ObjetoCorrecto : MonoBehaviour
 {
     private MemoryTest memoryTest;
     private TomarObjeto tomarObjeto;
+    private textoEnPantalla text;
 
     void Start()
     {
         // Inicializar memoryTest con el componente en la escena
         memoryTest = FindObjectOfType<MemoryTest>();
         tomarObjeto = FindAnyObjectByType<TomarObjeto>();
+        text = FindAnyObjectByType<textoEnPantalla>();
     }
 
     private void OnTriggerStay(Collider other)
@@ -23,13 +25,13 @@ public class ObjetoCorrecto : MonoBehaviour
                 // Verificar si el objeto en el trigger es el nuevo objeto
                 if (memoryTest.getNewObj().gameObject == other.gameObject)
                 {
-                    other.gameObject.SetActive(false);
-                    Debug.Log("¡Encontraste el nuevo objeto!");
+                    text.setTextoPantalla("¡Encontraste el objeto!");
                     memoryTest.reiniciar();
                 }
                 else
                 {
-                    Debug.Log("Este no es el nuevo objeto.");
+                    text.setTextoPantalla("¡Ese no es el objeto!");
+                    memoryTest.reiniciar();
                 }
             }
         }
