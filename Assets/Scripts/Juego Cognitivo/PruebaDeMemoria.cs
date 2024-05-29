@@ -46,6 +46,7 @@ public class MemoryTest : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.JoystickButton1))
         {
+            reiniciar();
             StartMemoryTest();
         }
     }
