@@ -8,6 +8,7 @@ TagManager:
   - DoorKey
   - MesaObj
   - Boton
+  - PinMemoria
   layers:
   - Default
   - TransparentFX
