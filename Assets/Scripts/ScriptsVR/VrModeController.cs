@@ -44,6 +44,18 @@ public class VrModeController : MonoBehaviour
 
     public void Update()
     {
+        if (XRGeneralSettings.Instance == null)
+        {
+            Debug.LogError("XRGeneralSettings.Instance is null. Please ensure XR is set up correctly in Project Settings.");
+            return;
+        }
+
+        if (XRGeneralSettings.Instance.Manager == null)
+        {
+            Debug.LogError("XRGeneralSettings.Instance.Manager is null.");
+            return;
+        }
+
         if (_isVrModeEnabled)
         {
             if (Api.IsCloseButtonPressed)
@@ -81,6 +93,21 @@ public class VrModeController : MonoBehaviour
     private IEnumerator StartXR()
     {
         Debug.Log("Initializing XR...");
+
+        // Verificar si XRGeneralSettings.Instance es nulo
+        if (XRGeneralSettings.Instance == null)
+        {
+            Debug.LogError("XRGeneralSettings.Instance is null. Please ensure XR is set up correctly in Project Settings.");
+            yield break;
+        }
+
+        // Verificar si XRGeneralSettings.Instance.Manager es nulo
+        if (XRGeneralSettings.Instance.Manager == null)
+        {
+            Debug.LogError("XRGeneralSettings.Instance.Manager is null.");
+            yield break;
+        }
+
         yield return XRGeneralSettings.Instance.Manager.InitializeLoader();
 
         if (XRGeneralSettings.Instance.Manager.activeLoader == null)
@@ -90,10 +117,6 @@ public class VrModeController : MonoBehaviour
         else
         {
             Debug.Log("XR initialized.");
-
-            Debug.Log("Starting XR...");
-            XRGeneralSettings.Instance.Manager.StartSubsystems();
-            Debug.Log("XR started.");
         }
     }
     
