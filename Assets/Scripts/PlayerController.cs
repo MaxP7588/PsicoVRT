@@ -14,6 +14,14 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         characterController = GetComponent<CharacterController>();
+        if (characterController == null)
+        {
+            Debug.LogError("CharacterController no encontrado");
+        }
+        if (cameraTransform == null)
+        {
+            Debug.LogError("cameraTransform no asignado");
+        }
     }
 
     void Update()
