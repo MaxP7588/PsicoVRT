@@ -11,7 +11,7 @@ public class CardboardStartup : MonoBehaviour
 
         if (!Api.HasDeviceParams())
         {
-            Api.ScanDeviceParams();
+            //Api.ScanDeviceParams();
         }
     }
 
@@ -20,7 +20,7 @@ public class CardboardStartup : MonoBehaviour
     {
         if (Api.IsGearButtonPressed)
         {
-            Api.ScanDeviceParams();
+            //Api.ScanDeviceParams();
         }
 
         if (Api.IsCloseButtonPressed)

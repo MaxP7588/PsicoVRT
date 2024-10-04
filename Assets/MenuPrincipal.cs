@@ -4,6 +4,14 @@ using UnityEngine.SceneManagement;
 
 public class MenuPrincipal : MonoBehaviour
 {
+
+    public void Start()
+    {
+        Debug.Log("Apagando VR...");
+        VrModeController vrModeController = new VrModeController();
+        vrModeController.ExitVR();
+    }
+    
     public void jugarTutorial()
     {
         Debug.Log("Iniciando tutorial...");
