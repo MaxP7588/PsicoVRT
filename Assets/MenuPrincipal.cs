@@ -1,20 +1,26 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.XR.Management;
 
 public class MenuPrincipal : MonoBehaviour
 {
-    void Start()
+    public void jugarTutorial()
     {
-        XRGeneralSettings.Instance.Manager.StopSubsystems();
-        XRGeneralSettings.Instance.Manager.DeinitializeLoader();
+        Debug.Log("Iniciando tutorial...");
+        StartCoroutine(CargarEscena(SceneManager.GetActiveScene().buildIndex + 1));
     }
 
-    public void jugar()
+    public void juegoCognitivo()
     {
-      
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        
+        Debug.Log("Iniciando juego cognitivo...");
+        StartCoroutine(CargarEscena(SceneManager.GetActiveScene().buildIndex + 2));
+    }
+
+    private IEnumerator CargarEscena(int sceneIndex)
+    {
+        Debug.Log("Cargando escena...");
+        yield return null; // Puedes agregar una espera si es necesario
+        Debug.Log("Cargando escena: " + sceneIndex);
+        SceneManager.LoadScene(sceneIndex);
     }
 }
