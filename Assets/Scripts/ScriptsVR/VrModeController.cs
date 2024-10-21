@@ -1,6 +1,7 @@
 using System.Collections;
 using Google.XR.Cardboard;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.XR;
 using UnityEngine.XR.Management;
 
@@ -76,6 +77,7 @@ public class VrModeController : MonoBehaviour
     public void ExitVR()
     {
         StopXR();
+        SceneManager.LoadScene(0);
     }
 
     private IEnumerator StartXR()

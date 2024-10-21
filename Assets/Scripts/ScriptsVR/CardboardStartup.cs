@@ -1,5 +1,6 @@
 using Google.XR.Cardboard;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CardboardStartup : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class CardboardStartup : MonoBehaviour
     {
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
         Screen.brightness = 1.0f;
-
+        
         if (!Api.HasDeviceParams())
         {
             //Api.ScanDeviceParams();
@@ -25,7 +26,7 @@ public class CardboardStartup : MonoBehaviour
 
         if (Api.IsCloseButtonPressed)
         {
-            Application.Quit();
+            SceneManager.LoadScene(0);
         }
 
         if (Api.IsTriggerHeldPressed)

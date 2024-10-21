@@ -10,6 +10,7 @@ public class EscenariFobiaAltura : MonoBehaviour
     public float speed = 2.0f; // Velocidad a la que sube el elevador
     public float maxHeight = 37.0f; // Altura máxima a la que sube el elevador
     private bool isMoving = false; // Indica si el elevador está en movimiento
+    private bool isDoorClosed = false; // Indica si las puertas del elevador están cerradas
 
     // Start is called before the first frame update
     void Start()
@@ -19,16 +20,17 @@ public class EscenariFobiaAltura : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isMoving && transform.position.y <= maxHeight)
+        if (isMoving)
         {
             // Mover el elevador hacia arriba
             transform.position += Vector3.up * speed * Time.deltaTime;
-            Debug.Log("Elevador en movimiento. Altura actual: " + transform.position.y);
 
             // Detener el elevador cuando alcance la altura máxima
             if (transform.position.y >= maxHeight)
             {
+                OpenDoors();
                 isMoving = false;
+                transform.position = new Vector3(transform.position.x, maxHeight, transform.position.z); // Asegurarse de que la posición sea exactamente maxHeight
                 Debug.Log("Elevador ha alcanzado la altura máxima.");
             }
         }
@@ -39,16 +41,16 @@ public class EscenariFobiaAltura : MonoBehaviour
     {
         // Imprimir en consola el nombre del objeto con el que colisiona
         Debug.Log("Colisión detectada con: " + other.name);
+        if (other.CompareTag("Player") && !isDoorClosed)
+        {
             Debug.Log("Jugador detectado, iniciando movimiento del elevador.");
-            //esperar 1 segundo
             StartCoroutine(StartElevator());
-            
-            
+        }
     }
 
     private IEnumerator StartElevator()
     {
-        //esperar un segundo
+        // Esperar un segundo
         yield return new WaitForSeconds(1);
         isMoving = true;
         CloseDoors();
@@ -60,12 +62,23 @@ public class EscenariFobiaAltura : MonoBehaviour
         if (puertaD != null && puertaI != null)
         {
             // Cerrar las puertas del elevador
-            // sumar al eje x +1.5f en puerta D
-            puertaD.position += Vector3.right * 0.5f;
-            // restar al eje x -1.5f en puerta I
-            puertaI.position -= Vector3.right * 0.5f;
-
+            puertaD.position += Vector3.right * 0.5f; // Mover la puerta derecha
+            puertaI.position -= Vector3.right * 0.5f; // Mover la puerta izquierda
+            isDoorClosed = true;
             Debug.Log("Puertas del elevador cerradas.");
+        }
+    }
+
+    // Método para abrir las puertas del elevador
+    void OpenDoors()
+    {
+        if (puertaD != null && puertaI != null)
+        {
+            // Abrir las puertas del elevador
+            puertaD.position -= Vector3.right * 0.5f; // Mover la puerta derecha
+            puertaI.position += Vector3.right * 0.5f; // Mover la puerta izquierda
+            isDoorClosed = false;
+            Debug.Log("Puertas del elevador abiertas.");
         }
     }
 }

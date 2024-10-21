@@ -24,6 +24,12 @@ public class MenuPrincipal : MonoBehaviour
         StartCoroutine(CargarEscena(SceneManager.GetActiveScene().buildIndex + 2));
     }
 
+    public void juegoFobiaAltura()
+    {
+        Debug.Log("Iniciando juego cognitivo...");
+        StartCoroutine(CargarEscena(SceneManager.GetActiveScene().buildIndex + 3));
+    }
+
     private IEnumerator CargarEscena(int sceneIndex)
     {
         Debug.Log("Cargando escena...");
