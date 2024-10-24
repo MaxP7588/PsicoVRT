@@ -10,16 +10,23 @@ public class Key : MonoBehaviour {
     public GameObject keyPoofPrefab;
     public Door door;
     public GameObject puntoKey;
+    public Animator anim;
 
 	void Update () {
 
-        if (takeObjet)
-        {
-            Vector3 currentPosition = key.transform.position;
-            currentPosition.y = 2 + Mathf.Sin(Time.time * 2.0f);
-            key.transform.position = currentPosition;
-        }
+        
 
+    }
+
+    public void takeKey()
+    {
+        takeObjet = true;
+        anim.SetBool("isTake", takeObjet);
+    }
+    public void untakeKey()
+    {
+        takeObjet = false;
+        anim.SetBool("isTake", takeObjet);
     }
 
     private void OnTriggerStay(Collider other)
