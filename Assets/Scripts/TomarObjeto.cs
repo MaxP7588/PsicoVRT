@@ -8,13 +8,12 @@ public class TomarObjeto : MonoBehaviour
     public GameObject handPoint;
     private GameObject pickObject = null;
     public Camera cam;
-    public float maxDistance = 8.0f; // La distancia máxima del rayo
-
+    public float maxDistance = 8.0f; // La distancia mï¿½xima del rayo
     private bool buttonPressed = false;
 
     void Update()
     {
-        // Dibujar la línea del raycast en la escena
+        // Dibujar la lï¿½nea del raycast en la escena
         Vector3 rayOrigin = cam.transform.position;
         Vector3 rayDirection = cam.transform.forward * maxDistance;
         Debug.DrawLine(rayOrigin, rayOrigin + rayDirection, Color.red);
@@ -45,6 +44,7 @@ public class TomarObjeto : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit, maxDistance))
             {
+                Debug.Log(hit.collider.name);
                 if (hit.collider.CompareTag("Objeto"))
                 {
                     if (pickObject == null)
@@ -67,6 +67,8 @@ public class TomarObjeto : MonoBehaviour
                         }
 
                         pickObject = hit.collider.gameObject;
+                    }else{
+                        Debug.Log("Ya tienes un objeto en la mano");
                     }
                 }
                 else if (hit.collider.CompareTag("Boton"))
