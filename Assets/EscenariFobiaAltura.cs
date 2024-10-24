@@ -11,6 +11,7 @@ public class EscenariFobiaAltura : MonoBehaviour
     public float maxHeight = 37.0f; // Altura máxima a la que sube el elevador
     private bool isMoving = false; // Indica si el elevador está en movimiento
     private bool isDoorClosed = false; // Indica si las puertas del elevador están cerradas
+    private GameObject player;
 
     // Start is called before the first frame update
     void Start()
@@ -24,11 +25,13 @@ public class EscenariFobiaAltura : MonoBehaviour
         {
             // Mover el elevador hacia arriba
             transform.position += Vector3.up * speed * Time.deltaTime;
+            player.transform.position += Vector3.up * speed * Time.deltaTime;
 
             // Detener el elevador cuando alcance la altura máxima
             if (transform.position.y >= maxHeight)
             {
                 OpenDoors();
+                player.transform.SetParent(null);
                 isMoving = false;
                 transform.position = new Vector3(transform.position.x, maxHeight, transform.position.z); // Asegurarse de que la posición sea exactamente maxHeight
                 Debug.Log("Elevador ha alcanzado la altura máxima.");
@@ -44,6 +47,9 @@ public class EscenariFobiaAltura : MonoBehaviour
         if (other.CompareTag("Player") && !isDoorClosed)
         {
             Debug.Log("Jugador detectado, iniciando movimiento del elevador.");
+            //set parent
+            player = other.gameObject;
+            player.transform.SetParent(transform);
             StartCoroutine(StartElevator());
         }
     }

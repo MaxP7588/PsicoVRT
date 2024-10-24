@@ -6261,7 +6261,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   handPoint: {fileID: 1401132719}
   cam: {fileID: 610506353}
-  maxDistance: 2
+  maxDistance: 3
 --- !u!65 &1505868391
 BoxCollider:
   m_ObjectHideFlags: 0
