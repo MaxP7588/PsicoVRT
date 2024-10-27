@@ -8,13 +8,12 @@ public class TomarObjeto : MonoBehaviour
     public GameObject handPoint;
     private GameObject pickObject = null;
     public Camera cam;
-    public float maxDistance = 8.0f; // La distancia máxima del rayo
-
+    public float maxDistance = 8.0f; // La distancia mï¿½xima del rayo
     private bool buttonPressed = false;
 
     void Update()
     {
-        // Dibujar la línea del raycast en la escena
+        // Dibujar la lï¿½nea del raycast en la escena
         Vector3 rayOrigin = cam.transform.position;
         Vector3 rayDirection = cam.transform.forward * maxDistance;
         Debug.DrawLine(rayOrigin, rayOrigin + rayDirection, Color.red);
@@ -29,7 +28,8 @@ public class TomarObjeto : MonoBehaviour
                 pickObject.gameObject.transform.SetParent(null);
                 if (pickObject.name == "Key")
                 {
-                    pickObject.gameObject.GetComponent<Key>().takeObjet = true;
+                    pickObject.GetComponent<Rigidbody>().useGravity = false;
+                    pickObject.gameObject.GetComponent<Key>().untakeKey();
                     pickObject.transform.rotation = Quaternion.Euler(-90, 90, 0);
                     pickObject.gameObject.GetComponent<Key>().verPunto();
                 }
@@ -45,6 +45,7 @@ public class TomarObjeto : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit, maxDistance))
             {
+                Debug.Log(hit.collider.name);
                 if (hit.collider.CompareTag("Objeto"))
                 {
                     if (pickObject == null)
@@ -58,15 +59,19 @@ public class TomarObjeto : MonoBehaviour
 
                         if (hit.collider.name == "Key")
                         {
-                            hit.collider.GetComponent<Key>().takeObjet = false;
+                            hit.collider.GetComponent<Key>().takeKey();
                             Vector3 direction = cam.transform.forward;
                             direction.y = 0;
                             Quaternion targetRotation = Quaternion.LookRotation(direction);
                             hit.collider.transform.rotation = targetRotation * Quaternion.Euler(180, 0, 0);
                             hit.collider.GetComponent<Key>().ocultarPunto();
+                            //posicionar en 0,0,0
+                            hit.collider.transform.localPosition = new Vector3(0, 0, 0);
                         }
 
                         pickObject = hit.collider.gameObject;
+                    }else{
+                        Debug.Log("Ya tienes un objeto en la mano");
                     }
                 }
                 else if (hit.collider.CompareTag("Boton"))

@@ -39,17 +39,8 @@ public class PlayerController : MonoBehaviour
 
         Vector3 movement = (forward * verticalInput + right * horizontalInput) * speed;
 
-        if (isClimbing)
-        {
-            // Movimiento en escalera
-            Vector3 climbMovement = new Vector3(horizontalInput, verticalInput, 0) * climbSpeed;
-            characterController.Move(climbMovement * Time.deltaTime);
-        }
-        else
-        {
-            // Movimiento normal
-            characterController.Move(movement * Time.deltaTime);
-        }
+        // Movimiento normal
+        characterController.Move(movement * Time.deltaTime);
 
         // Aplicar gravedad manualmente
         if (!characterController.isGrounded && !isClimbing)
