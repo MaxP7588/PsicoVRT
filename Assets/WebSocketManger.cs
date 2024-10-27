@@ -18,8 +18,8 @@ public class WebRTCManager : MonoBehaviour
         webSocket.OnMessage += OnWebSocketMessage;
         webSocket.Connect();
         
-        // Inicializar RenderTexture
-        renderTexture = new RenderTexture(Screen.width, Screen.height, 24);
+        // Inicializar RenderTexture con mayor resolución
+        renderTexture = new RenderTexture(1080, 720, 24); // Aumentar la resolución a 1080p
         cam.targetTexture = renderTexture;
         previewImage.texture = renderTexture;
         
@@ -39,8 +39,8 @@ public class WebRTCManager : MonoBehaviour
                 tex.Apply();
                 RenderTexture.active = null;
                 
-                // Convertir el frame a bytes
-                byte[] bytes = tex.EncodeToJPG();
+                // Convertir el frame a bytes con mayor calidad
+                byte[] bytes = tex.EncodeToJPG(100); // Ajustar la calidad de la compresión JPG al máximo (100)
                 
                 // Enviar frame por WebSocket
                 string base64 = Convert.ToBase64String(bytes);
