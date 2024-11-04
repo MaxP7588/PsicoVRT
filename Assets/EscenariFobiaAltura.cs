@@ -25,7 +25,7 @@ public class EscenariFobiaAltura : MonoBehaviour
         {
             // Mover el elevador hacia arriba
             transform.position += Vector3.up * speed * Time.deltaTime;
-            player.transform.position += Vector3.up * speed * Time.deltaTime;
+            player.transform.position = new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z);
 
             // Detener el elevador cuando alcance la altura máxima
             if (transform.position.y >= maxHeight)
