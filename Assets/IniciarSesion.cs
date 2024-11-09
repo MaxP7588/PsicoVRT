@@ -2,9 +2,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class CrearCuenta : MonoBehaviour
+public class IniciarSesion : MonoBehaviour
 {
-    public TMP_InputField nombreInput;
     public TMP_InputField emailInput;
     public TMP_InputField passwordInput;
     
@@ -20,14 +19,13 @@ public class CrearCuenta : MonoBehaviour
         }
     }
 
-    public void OnCreateAccountClick()
+    public void OnLoginClick()
     {
-        string nombre = nombreInput.text;
         string email = emailInput.text;
         string password = passwordInput.text;
 
         // Validar campos vacíos
-        if (string.IsNullOrEmpty(nombre) || string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
+        if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
         {
             Debug.LogError("Todos los campos son requeridos");
             return;
@@ -40,22 +38,16 @@ public class CrearCuenta : MonoBehaviour
             return;
         }
 
-        // Validar longitud de contraseña
-        if (password.Length < 8)
+        // Intentar iniciar sesión
+        if (mySQLConnector.LoginUser(email, password))
         {
-            Debug.LogError("La contraseña debe tener al menos 8 caracteres");
-            return;
-        }
-
-        // Intentar registrar usuario
-        if (mySQLConnector.RegisterUser(nombre, email, password))
-        {
-            Debug.Log("Usuario registrado exitosamente");
+            Debug.Log("Inicio de sesión exitoso");
             LimpiarCampos();
+            // Aquí puedes agregar código para cambiar de escena o mostrar el menú principal
         }
         else
         {
-            Debug.LogError("Error al registrar usuario");
+            Debug.LogError("Credenciales inválidas");
         }
     }
 
@@ -74,7 +66,6 @@ public class CrearCuenta : MonoBehaviour
 
     private void LimpiarCampos()
     {
-        nombreInput.text = "";
         emailInput.text = "";
         passwordInput.text = "";
     }
