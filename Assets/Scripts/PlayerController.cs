@@ -54,22 +54,4 @@ public class PlayerController : MonoBehaviour
 
         characterController.Move(velocity * Time.deltaTime);
     }
-/* 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Escalera"))
-        {
-            isClimbing = true;
-            velocity = Vector3.zero; // Reiniciar la velocidad cuando empieza a escalar
-        }
-    }
-     
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.CompareTag("Escalera"))
-        {
-            isClimbing = false;
-        }
-    }
-    */
 }

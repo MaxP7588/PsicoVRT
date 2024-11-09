@@ -1,33 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem.Controls;
 
 public class RotarCamaraJoystick : MonoBehaviour
 {
-    // Velocidad de rotaci髇 de la c醡ara
-    public float rotationSpeed = 2.0f;
+    // Sensibilidad de la rotaci贸n de la c谩mara
+    public float mouseSensitivity = 100.0f;
 
-    // Nombre del eje horizontal y vertical del joystick
-    public string HorizontalDerecha = "HorizontalDerecha";
+    // Referencia al transform del jugador para rotar el cuerpo junto con la c谩mara
+    public Transform playerBody;
 
+    private float xRotation = 0.0f;
 
     void Start()
     {
+        // Ocultar y bloquear el cursor en el centro de la pantalla
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update()
     {
-        if(Input.GetAxis(HorizontalDerecha)==1 || Input.GetAxis(HorizontalDerecha) == -1)
-        {
-            // Obtiene la entrada horizontal y vertical del joystick
-            float Horizontal = Input.GetAxis(HorizontalDerecha);
+        // Obtener la entrada del mouse
+        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
-            // Calcula la rotaci髇 basada en la entrada del joystick
-            Vector3 rotation = new Vector3(0.0f, Horizontal, 0.0f) * rotationSpeed;
+        // Calcular la rotaci贸n en el eje X (vertical)
+        xRotation -= mouseY;
+        xRotation = Mathf.Clamp(xRotation, -90f, 90f); // Limitar la rotaci贸n vertical
 
-            transform.Rotate(rotation);
-        }
-        
+        // Aplicar la rotaci贸n en el eje X (vertical)
+        transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+
+        // Aplicar la rotaci贸n en el eje Y (horizontal) al cuerpo del jugador
+        playerBody.Rotate(Vector3.up * mouseX);
     }
 }
