@@ -18,7 +18,7 @@ public class TomarObjeto : MonoBehaviour
         Vector3 rayDirection = cam.transform.forward * maxDistance;
         Debug.DrawLine(rayOrigin, rayOrigin + rayDirection, Color.red);
 
-        if (Input.GetKey(KeyCode.JoystickButton3)) // SOLTAR UN OBJETO
+        if (Input.GetKey(KeyCode.JoystickButton3) || Input.GetKey(KeyCode.Q)) // SOLTAR UN OBJETO
         {
             if (pickObject != null)
             {
@@ -38,7 +38,7 @@ public class TomarObjeto : MonoBehaviour
             }
         }
 
-        if (Input.GetKey(KeyCode.JoystickButton2)) // TOMAR UN OBJETO
+        if (Input.GetKey(KeyCode.JoystickButton2) || Input.GetKey(KeyCode.E)) // TOMAR UN OBJETO
         {
             Ray ray = new Ray(cam.transform.position, cam.transform.forward);
             RaycastHit hit;
