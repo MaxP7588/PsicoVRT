@@ -2659,8 +2659,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ed6b5f5a2a32154db5090b51985126d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 1
-  HorizontalDerecha: HorizontalDerecha
+  mouseSensitivity: 100
+  playerBody: {fileID: 287148128}
 --- !u!114 &610506355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5269,7 +5269,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1389404206}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f50e1016866f36343b544c6f0f48c51e, type: 3}
   m_Name: 
@@ -6733,7 +6733,7 @@ Camera:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1587179880}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_ClearFlags: 1
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}

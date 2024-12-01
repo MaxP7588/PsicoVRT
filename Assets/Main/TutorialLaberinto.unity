@@ -44432,8 +44432,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ed6b5f5a2a32154db5090b51985126d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 1
-  HorizontalDerecha: HorizontalDerecha
+  mouseSensitivity: 100
+  playerBody: {fileID: 260464219}
 --- !u!114 &1690209568
 MonoBehaviour:
   m_ObjectHideFlags: 0
