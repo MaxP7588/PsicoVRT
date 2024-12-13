@@ -14,12 +14,12 @@ public class WebRTCManager : MonoBehaviour
     void Start()
     {
         // Inicializar WebSocket
-        webSocket = new WebSocket("ws://pacheco.chillan.ubiobio.cl:3033/");
+        webSocket = new WebSocket("ws://pacheco.chillan.ubiobio.cl:124");
         webSocket.OnMessage += OnWebSocketMessage;
         webSocket.Connect();
         
         // Inicializar RenderTexture con mayor resolución
-        renderTexture = new RenderTexture(720, 480, 24); // Aumentar la resolución a 1080p
+        renderTexture = new RenderTexture(720, 480, 24); 
         cam.targetTexture = renderTexture;
         previewImage.texture = renderTexture;
         

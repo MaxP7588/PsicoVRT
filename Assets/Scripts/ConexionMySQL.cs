@@ -6,7 +6,7 @@ using System.Text;
 
 public class MySQLConnector : MonoBehaviour
 {
-    private string server = "127.0.0.1";
+    private string server = "pacheco.chillan.ubiobio.cl";
     private string database = "psicovrt";
     private string uid = "root";
     private string password = "0507";
@@ -15,7 +15,7 @@ public class MySQLConnector : MonoBehaviour
 
     void Start()
     {
-        connectionString = $"Server={server};Port=3307;Database={database};User ID={uid};Password={password};";
+        connectionString = $"Server={server};Port=3033;Database={database};User ID={uid};Password={password};";
 
         try
         {
