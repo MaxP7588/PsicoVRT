@@ -8,12 +8,12 @@ public class TomarObjeto : MonoBehaviour
     public GameObject handPoint;
     private GameObject pickObject = null;
     public Camera cam;
-    public float maxDistance = 8.0f; // La distancia m�xima del rayo
+    public float maxDistance = 8.0f; // La distancia maxima del rayo
     private bool buttonPressed = false;
 
     void Update()
     {
-        // Dibujar la l�nea del raycast en la escena
+        // Dibujar la linea del raycast en la escena
         Vector3 rayOrigin = cam.transform.position;
         Vector3 rayDirection = cam.transform.forward * maxDistance;
         Debug.DrawLine(rayOrigin, rayOrigin + rayDirection, Color.red);

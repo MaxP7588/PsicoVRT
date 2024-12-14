@@ -6,7 +6,7 @@ using System.Text;
 
 public class MySQLConnector : MonoBehaviour
 {
-    private string server = "127.0.0.1";
+    private string server = "pacheco.chillan.ubiobio.cl";
     private string database = "psicovrt";
     private string uid = "root";
     private string password = "0507";
@@ -15,7 +15,7 @@ public class MySQLConnector : MonoBehaviour
 
     void Start()
     {
-        connectionString = $"Server={server};Port=3307;Database={database};User ID={uid};Password={password};";
+        connectionString = $"Server={server};Port=3033;Database={database};User ID={uid};Password={password};";
 
         try
         {
@@ -32,7 +32,6 @@ public class MySQLConnector : MonoBehaviour
             }
         }
     }
-
 
     void OnApplicationQuit()
     {
@@ -71,7 +70,7 @@ public class MySQLConnector : MonoBehaviour
         try
         {
             // Validar que el email no exista
-            string checkEmail = "SELECT COUNT(*) FROM user WHERE email = @email";
+            string checkEmail = "SELECT COUNT(*) FROM usuarios WHERE email = @email";
             using (MySqlCommand cmd = new MySqlCommand(checkEmail, connection))
             {
                 cmd.Parameters.AddWithValue("@email", email);
@@ -87,7 +86,7 @@ public class MySQLConnector : MonoBehaviour
             string encryptedPassword = EncryptPassword(password);
 
             // Insertar nuevo usuario
-            string query = "INSERT INTO user (nombre, email, password) VALUES (@nombre, @email, @password)";
+            string query = "INSERT INTO usuarios (nombre, email, password) VALUES (@nombre, @email, @password)";
             using (MySqlCommand cmd = new MySqlCommand(query, connection))
             {
                 cmd.Parameters.AddWithValue("@nombre", nombre);
@@ -108,11 +107,18 @@ public class MySQLConnector : MonoBehaviour
 
     public bool LoginUser(string email, string password)
     {
+        // Verificar si ya hay una sesión activa
+        if (ControlSesion.Instance.IsLoggedIn())
+        {
+            Debug.LogWarning("Ya existe una sesión activa");
+            return false;
+        }
+
         try
         {
             string encryptedPassword = EncryptPassword(password);
             
-            string query = "SELECT id, nombre FROM user WHERE email = @email AND password = @password";
+            string query = "SELECT id_usuario, nombre, email FROM usuarios WHERE email = @email AND password = @password";
             using (MySqlCommand cmd = new MySqlCommand(query, connection))
             {
                 cmd.Parameters.AddWithValue("@email", email);
@@ -122,16 +128,19 @@ public class MySQLConnector : MonoBehaviour
                 {
                     if (reader.Read())
                     {
-                        int userId = reader.GetInt32("id");
+                        int userId = reader.GetInt32("id_usuario");
                         string nombre = reader.GetString("nombre");
-                        Debug.Log($"Inicio de sesión exitoso. Usuario: {nombre}, ID: {userId}");
-                        return true;
+                        string userEmail = reader.GetString("email");
+                        
+                        // Iniciar sesión en el controlador
+                        if (ControlSesion.Instance.IniciarSesion(userId, nombre, userEmail))
+                        {
+                            Debug.Log($"Inicio de sesión exitoso. Usuario: {nombre}, ID: {userId}");
+                            return true;
+                        }
                     }
-                    else
-                    {
-                        Debug.LogError("Credenciales inválidas");
-                        return false;
-                    }
+                    Debug.LogError("Credenciales inválidas");
+                    return false;
                 }
             }
         }
