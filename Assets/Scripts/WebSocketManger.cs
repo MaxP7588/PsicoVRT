@@ -11,6 +11,16 @@ public class WebRTCManager : MonoBehaviour
     [SerializeField] private RawImage previewImage; // Hacer visible en el inspector
     [SerializeField] private Camera cam; // Hacer visible en el inspector
     
+    // Parámetros ajustables para rendimiento
+    [SerializeField] private int textureWidth = 720;  // Reducido de 720
+    [SerializeField] private int textureHeight = 480; // Reducido de 480
+    [SerializeField] private int jpgQuality = 10;     // Reducido de 75
+    [SerializeField] private float frameDelay = 0.1f; // ~15 FPS (reducido de 30 FPS)
+    
+    private float lastFrameTime;
+    private int framesSentInLastSecond = 0;
+    private float lastPerformanceCheck = 0;
+    
     void Start()
     {
         // Inicializar WebSocket
@@ -18,8 +28,8 @@ public class WebRTCManager : MonoBehaviour
         webSocket.OnMessage += OnWebSocketMessage;
         webSocket.Connect();
         
-        // Inicializar RenderTexture con mayor resolución
-        renderTexture = new RenderTexture(720, 480, 24); 
+        // Inicializar RenderTexture con menor resolución
+        renderTexture = new RenderTexture(textureWidth, textureHeight, 24); 
         cam.targetTexture = renderTexture;
         previewImage.texture = renderTexture;
         
@@ -30,8 +40,19 @@ public class WebRTCManager : MonoBehaviour
     {
         while (true)
         {
-            if (webSocket.IsAlive)
+            if (webSocket.IsAlive && Time.time - lastFrameTime >= frameDelay)
             {
+                lastFrameTime = Time.time;
+                framesSentInLastSecond++;
+                
+                // Monitorear rendimiento cada segundo
+                if (Time.time - lastPerformanceCheck >= 1f)
+                {
+                    //AdjustQualityBasedOnPerformance();
+                    framesSentInLastSecond = 0;
+                    lastPerformanceCheck = Time.time;
+                }
+                
                 // Convertir el RenderTexture a Texture2D
                 Texture2D tex = new Texture2D(renderTexture.width, renderTexture.height, TextureFormat.RGB24, false);
                 RenderTexture.active = renderTexture;
@@ -39,8 +60,8 @@ public class WebRTCManager : MonoBehaviour
                 tex.Apply();
                 RenderTexture.active = null;
                 
-                // Convertir el frame a bytes con mayor calidad
-                byte[] bytes = tex.EncodeToJPG(75); // Ajustar la calidad de la compresión JPG al máximo (100)
+                // Convertir el frame a bytes con menor calidad
+                byte[] bytes = tex.EncodeToJPG(jpgQuality); // Ajustar la calidad de la compresión JPG
                 
                 // Enviar frame por WebSocket
                 string base64 = Convert.ToBase64String(bytes);
@@ -48,8 +69,28 @@ public class WebRTCManager : MonoBehaviour
                 
                 Destroy(tex);
             }
-            yield return new WaitForSeconds(0.033f); // ~30 FPS
+            yield return null;
         }
+    }
+    
+    private void AdjustQualityBasedOnPerformance()
+    {
+        float fps = 1.0f / Time.deltaTime;
+        
+        // Si FPS < 20, reducir calidad
+        if (fps < 20)
+        {
+            jpgQuality = Mathf.Max(30, jpgQuality - 5);
+            frameDelay = Mathf.Min(0.1f, frameDelay + 0.01f);
+        }
+        // Si FPS > 40, podemos aumentar calidad
+        else if (fps > 40)
+        {
+            jpgQuality = Mathf.Min(75, jpgQuality + 5);
+            frameDelay = Mathf.Max(0.033f, frameDelay - 0.01f);
+        }
+        
+        Debug.Log($"FPS: {fps}, Quality: {jpgQuality}, Delay: {frameDelay}");
     }
     
     void OnWebSocketMessage(object sender, MessageEventArgs e)
