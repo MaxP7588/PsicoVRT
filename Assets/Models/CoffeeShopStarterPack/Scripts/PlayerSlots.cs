@@ -22,15 +22,15 @@ namespace PW
     public class PlayerSlots : MonoBehaviour
     {
         public int slotCount;
-
-        //Player holds order ID's of items in those slots;
-        int[] slotItems;
+        
+        int[] slotItems; 
 
         public Image[] slotUIObjects;
 
         private void OnEnable()
         {
             if (slotItems == null)
+                Debug.Log("SlotItems is null");
                 slotItems = new int[3] { -1, -1, -1 };
 
             BasicGameEvents.onProductAddedToSlot += BasicGameEvents_onProductAddedToSlot;

@@ -20,7 +20,7 @@ namespace PW
     public class OrderGenerator : MonoBehaviour
     {
         //This limits generating orders constantly
-        public int MaxConcurrentOrder=4;
+        public int MaxConcurrentOrder=2;
 
         public int currentOrderCount;
 
@@ -115,7 +115,7 @@ namespace PW
 
             var newOrder = GameObject.Instantiate(orderRepPrefab, UIParentForOrders).GetComponent<ServeOrder>();
 
-            newOrder.SetOrder(orderID,Random.Range(5f,40f));
+            newOrder.SetOrder(orderID,40f);
 
             newOrder.SetSprite(orderSprites[spriteIndex]);
 

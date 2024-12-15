@@ -7858,7 +7858,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1180558613
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8828,7 +8828,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1488620897}
         m_TargetAssemblyTypeName: MenuPrincipal, Assembly-CSharp
-        m_MethodName: juegoFobiaAltura
+        m_MethodName: juegoRol
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

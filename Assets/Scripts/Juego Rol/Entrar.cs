@@ -7,6 +7,11 @@ public class Entrar : MonoBehaviour
     [Header("Referencias")]
     [SerializeField] private Image panelNegro;
     [SerializeField] private Transform puntoDestino;
+    [SerializeField] private AudioSource locutor;
+    
+    [Header("Voces")]
+    [SerializeField] private AudioClip bienvenidaClip;
+    [SerializeField] private AudioClip instruccionesClip;
     
     [Header("Configuración")]
     [SerializeField] private float duracionFade = 1f;
@@ -16,6 +21,8 @@ public class Entrar : MonoBehaviour
     [SerializeField] private GameObject game ;
     [SerializeField] private GameObject visual ;
     [SerializeField] private GameObject city ;
+    [SerializeField] private GameObject flecha ;
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -45,6 +52,9 @@ public class Entrar : MonoBehaviour
         jugador.transform.position = puntoDestino.position;
         jugador.transform.rotation = puntoDestino.rotation;
 
+        // Congela al jugador
+        
+
         // Fade out
         tiempoTranscurrido = 0;
         while (tiempoTranscurrido < duracionFade)
@@ -55,9 +65,22 @@ public class Entrar : MonoBehaviour
             yield return null;
         }
 
+        
+
+        // Reproducir bienvenida
+        locutor.clip = bienvenidaClip;
+        locutor.Play();
+        yield return new WaitForSeconds(bienvenidaClip.length + 1f);
+
+        // Reproducir instrucciones
+        locutor.clip = instruccionesClip;
+        locutor.Play();
+        yield return new WaitForSeconds(instruccionesClip.length);
+
         //Empezar el juego
         game.SetActive(true);
         visual.SetActive(true);
         city.SetActive(false);
+        flecha.SetActive(false);
     }
 }

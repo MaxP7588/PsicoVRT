@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Main/JuegoFobiaAltura.unity
     guid: d15202c1879c78d48be7155727c3ef1f
+  - enabled: 1
+    path: Assets/Main/JuegoRol.unity
+    guid: 2d8b752efe9dd114a9a8249593bead8d
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 96345b9e099145142846a8d8f62b4581,
       type: 2}
