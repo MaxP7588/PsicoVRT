@@ -1,36 +1,65 @@
-﻿// 
-// ReadyToServe.cs
-//
-// Author:
-//       K.Sinan Acar <ksa@puzzledwizard.com>
-//
-// Copyright (c) 2019 PuzzledWizard
-//
-//
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
+
 namespace PW
 {
     public class ReadyToServe : ProductGameObject
     {
-
+        [Header("Referencias")]
         public GameObject platePrefab;
+        public Camera mainCamera;
+        
+        [Header("Configuración")]
+        public float maxDistance = 8f;
+        public KeyCode joystickButton = KeyCode.JoystickButton3;
 
-        Collider m_collider;
+        private Collider m_collider;
+        private bool canInteract = true;
 
         private void Awake()
         {
             m_collider = GetComponent<Collider>();
             m_collider.enabled = true;
+            
+            if(mainCamera == null)
+                mainCamera = Camera.main;
+        }
+
+        void Update()
+        {
+            // Verificar input de joystick
+            if (Input.GetKeyDown(joystickButton) && canInteract)
+            {
+                CheckRaycastAndServe();
+            }
         }
 
         void OnMouseDown()
         {
-            if (!base.CanGoPlayerSlot())
+            if (canInteract)
+                ServeProduct();
+        }
+
+        private void CheckRaycastAndServe()
+        {
+            Ray ray = new Ray(mainCamera.transform.position, mainCamera.transform.forward);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, maxDistance))
             {
-                return;
+                if (hit.collider.gameObject == gameObject)
+                {
+                    ServeProduct();
+                }
             }
+        }
+
+        private void ServeProduct()
+        {
+            if (!base.CanGoPlayerSlot())
+                return;
+
+            canInteract = false;
 
             if (AddToPlateBeforeServed)
             {
@@ -40,24 +69,22 @@ namespace PW
                 {
                     plate.transform.localPosition = plateOffset;
                 }
-                plate.transform.SetAsFirstSibling();//so we know what to delete later
-
+                plate.transform.SetAsFirstSibling();
             }
+
             if (RegenerateProduct)
             {
                 BasicGameEvents.RaiseInstantiatePlaceHolder(transform.parent, transform.position, gameObject);
             }
-            StartCoroutine(AnimateGoingToSlot());
 
+            StartCoroutine(AnimateGoingToSlot());
         }
 
         public override IEnumerator AnimateGoingToSlot()
         {
-
             yield return base.AnimateGoingToSlot();
-
             gameObject.SetActive(false);
+            canInteract = true;
         }
-
     }
 }

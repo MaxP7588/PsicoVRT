@@ -1256,6 +1256,9 @@ MonoBehaviour:
   RegenerateProduct: 1
   platePrefab: {fileID: 1927874038934084, guid: 36aa94bb9e7364945ad8a487c4c3ee62,
     type: 3}
+  mainCamera: {fileID: 0}
+  maxDistance: 8
+  joystickButton: 333
 --- !u!64 &58698295
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1464,6 +1467,9 @@ MonoBehaviour:
   RegenerateProduct: 1
   platePrefab: {fileID: 1927874038934084, guid: 36aa94bb9e7364945ad8a487c4c3ee62,
     type: 3}
+  mainCamera: {fileID: 0}
+  maxDistance: 8
+  joystickButton: 333
 --- !u!64 &62075257
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1891,6 +1897,9 @@ MonoBehaviour:
   RegenerateProduct: 1
   platePrefab: {fileID: 1927874038934084, guid: 36aa94bb9e7364945ad8a487c4c3ee62,
     type: 3}
+  mainCamera: {fileID: 0}
+  maxDistance: 8
+  joystickButton: 333
 --- !u!64 &73793006
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -4316,22 +4325,22 @@ PrefabInstance:
     - target: {fileID: 2015934406930253867, guid: 458271fb06e38ef4abfe60d080c61a94,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.7
+      value: 2.3
       objectReference: {fileID: 0}
     - target: {fileID: 2015934406930253867, guid: 458271fb06e38ef4abfe60d080c61a94,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.7
+      value: 2.3
       objectReference: {fileID: 0}
     - target: {fileID: 2015934406930253867, guid: 458271fb06e38ef4abfe60d080c61a94,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.7
+      value: 2.3
       objectReference: {fileID: 0}
     - target: {fileID: 2015934406930253867, guid: 458271fb06e38ef4abfe60d080c61a94,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2015934406930253867, guid: 458271fb06e38ef4abfe60d080c61a94,
         type: 3}
@@ -4341,7 +4350,7 @@ PrefabInstance:
     - target: {fileID: 2015934406930253867, guid: 458271fb06e38ef4abfe60d080c61a94,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.122
       objectReference: {fileID: 0}
     - target: {fileID: 2015934406930253867, guid: 458271fb06e38ef4abfe60d080c61a94,
         type: 3}
@@ -4377,6 +4386,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2015934406930253867, guid: 458271fb06e38ef4abfe60d080c61a94,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6494,7 +6508,7 @@ Transform:
   m_GameObject: {fileID: 287148124}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.00034529547, w: 0.99999994}
-  m_LocalPosition: {x: 130.58, y: 1.239, z: 51.85}
+  m_LocalPosition: {x: 130.58, y: 2.13, z: 51.85}
   m_LocalScale: {x: 1, y: 1.21, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6528,7 +6542,7 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: -0.7, z: 0}
 --- !u!65 &287148130
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7379,6 +7393,9 @@ MonoBehaviour:
   RegenerateProduct: 1
   platePrefab: {fileID: 1927874038934084, guid: 36aa94bb9e7364945ad8a487c4c3ee62,
     type: 3}
+  mainCamera: {fileID: 0}
+  maxDistance: 8
+  joystickButton: 333
 --- !u!64 &316912025
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -7566,7 +7583,7 @@ Transform:
   m_GameObject: {fileID: 331469210}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.99999595, z: -0, w: 0.0028770966}
-  m_LocalPosition: {x: 138.2, y: 0.69633937, z: 41.48}
+  m_LocalPosition: {x: 138.2, y: 1.235, z: 41.48}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8865,6 +8882,9 @@ MonoBehaviour:
   RegenerateProduct: 1
   platePrefab: {fileID: 1927874038934084, guid: 36aa94bb9e7364945ad8a487c4c3ee62,
     type: 3}
+  mainCamera: {fileID: 0}
+  maxDistance: 8
+  joystickButton: 333
 --- !u!64 &402471065
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -10174,6 +10194,9 @@ MonoBehaviour:
   RegenerateProduct: 1
   platePrefab: {fileID: 1927874038934084, guid: 36aa94bb9e7364945ad8a487c4c3ee62,
     type: 3}
+  mainCamera: {fileID: 0}
+  maxDistance: 8
+  joystickButton: 333
 --- !u!64 &443934671
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -10246,37 +10269,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 443934668}
   m_Mesh: {fileID: 4300000, guid: 1f00f2bf39c2347bc844a6db1cdc4f74, type: 3}
---- !u!1 &446474206
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 446474207}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &446474207
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 446474206}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 618729278}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &447526176
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11950,6 +11942,9 @@ MonoBehaviour:
   RegenerateProduct: 1
   platePrefab: {fileID: 1927874038934084, guid: 36aa94bb9e7364945ad8a487c4c3ee62,
     type: 3}
+  mainCamera: {fileID: 0}
+  maxDistance: 8
+  joystickButton: 333
 --- !u!64 &517490019
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -14241,7 +14236,6 @@ Transform:
   - {fileID: 123349616}
   - {fileID: 1798561524}
   - {fileID: 554320892}
-  - {fileID: 446474207}
   m_Father: {fileID: 1002655440}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &620234584
@@ -17652,6 +17646,9 @@ MonoBehaviour:
   RegenerateProduct: 1
   platePrefab: {fileID: 1927874038934084, guid: 36aa94bb9e7364945ad8a487c4c3ee62,
     type: 3}
+  mainCamera: {fileID: 0}
+  maxDistance: 8
+  joystickButton: 333
 --- !u!64 &781754488
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -18199,6 +18196,9 @@ MonoBehaviour:
   RegenerateProduct: 1
   platePrefab: {fileID: 1927874038934084, guid: 36aa94bb9e7364945ad8a487c4c3ee62,
     type: 3}
+  mainCamera: {fileID: 0}
+  maxDistance: 8
+  joystickButton: 333
 --- !u!64 &803407484
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -19342,6 +19342,9 @@ MonoBehaviour:
   RegenerateProduct: 1
   platePrefab: {fileID: 1927874038934084, guid: 36aa94bb9e7364945ad8a487c4c3ee62,
     type: 3}
+  mainCamera: {fileID: 0}
+  maxDistance: 8
+  joystickButton: 333
 --- !u!64 &867049782
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -20290,6 +20293,9 @@ MonoBehaviour:
   RegenerateProduct: 1
   platePrefab: {fileID: 1927874038934084, guid: 36aa94bb9e7364945ad8a487c4c3ee62,
     type: 3}
+  mainCamera: {fileID: 0}
+  maxDistance: 8
+  joystickButton: 333
 --- !u!64 &911076686
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -20467,6 +20473,9 @@ MonoBehaviour:
   RegenerateProduct: 1
   platePrefab: {fileID: 1927874038934084, guid: 36aa94bb9e7364945ad8a487c4c3ee62,
     type: 3}
+  mainCamera: {fileID: 0}
+  maxDistance: 8
+  joystickButton: 333
 --- !u!64 &915180652
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -20968,6 +20977,9 @@ MonoBehaviour:
   RegenerateProduct: 1
   platePrefab: {fileID: 1927874038934084, guid: 36aa94bb9e7364945ad8a487c4c3ee62,
     type: 3}
+  mainCamera: {fileID: 0}
+  maxDistance: 8
+  joystickButton: 333
 --- !u!64 &944916581
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -21501,6 +21513,9 @@ MonoBehaviour:
   RegenerateProduct: 1
   platePrefab: {fileID: 1927874038934084, guid: 36aa94bb9e7364945ad8a487c4c3ee62,
     type: 3}
+  mainCamera: {fileID: 0}
+  maxDistance: 8
+  joystickButton: 333
 --- !u!64 &955444509
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -23335,6 +23350,9 @@ MonoBehaviour:
   RegenerateProduct: 1
   platePrefab: {fileID: 1927874038934084, guid: 36aa94bb9e7364945ad8a487c4c3ee62,
     type: 3}
+  mainCamera: {fileID: 0}
+  maxDistance: 8
+  joystickButton: 333
 --- !u!64 &1026338693
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -25765,6 +25783,9 @@ MonoBehaviour:
   RegenerateProduct: 1
   platePrefab: {fileID: 1927874038934084, guid: 36aa94bb9e7364945ad8a487c4c3ee62,
     type: 3}
+  mainCamera: {fileID: 0}
+  maxDistance: 8
+  joystickButton: 333
 --- !u!64 &1132239900
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -25940,6 +25961,9 @@ MonoBehaviour:
   RegenerateProduct: 1
   platePrefab: {fileID: 1927874038934084, guid: 36aa94bb9e7364945ad8a487c4c3ee62,
     type: 3}
+  mainCamera: {fileID: 0}
+  maxDistance: 8
+  joystickButton: 333
 --- !u!64 &1134587758
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -27160,6 +27184,9 @@ MonoBehaviour:
   RegenerateProduct: 1
   platePrefab: {fileID: 1927874038934084, guid: 36aa94bb9e7364945ad8a487c4c3ee62,
     type: 3}
+  mainCamera: {fileID: 0}
+  maxDistance: 8
+  joystickButton: 333
 --- !u!64 &1176649735
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -27347,6 +27374,9 @@ MonoBehaviour:
   RegenerateProduct: 1
   platePrefab: {fileID: 1927874038934084, guid: 36aa94bb9e7364945ad8a487c4c3ee62,
     type: 3}
+  mainCamera: {fileID: 0}
+  maxDistance: 8
+  joystickButton: 333
 --- !u!64 &1184231857
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -28542,6 +28572,9 @@ MonoBehaviour:
   RegenerateProduct: 1
   platePrefab: {fileID: 1927874038934084, guid: 36aa94bb9e7364945ad8a487c4c3ee62,
     type: 3}
+  mainCamera: {fileID: 0}
+  maxDistance: 8
+  joystickButton: 333
 --- !u!64 &1221119794
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -29196,6 +29229,9 @@ MonoBehaviour:
   RegenerateProduct: 1
   platePrefab: {fileID: 1927874038934084, guid: 36aa94bb9e7364945ad8a487c4c3ee62,
     type: 3}
+  mainCamera: {fileID: 0}
+  maxDistance: 8
+  joystickButton: 333
 --- !u!64 &1256479899
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -34190,6 +34226,9 @@ MonoBehaviour:
   RegenerateProduct: 1
   platePrefab: {fileID: 1927874038934084, guid: 36aa94bb9e7364945ad8a487c4c3ee62,
     type: 3}
+  mainCamera: {fileID: 0}
+  maxDistance: 8
+  joystickButton: 333
 --- !u!64 &1490991448
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -34906,6 +34945,9 @@ MonoBehaviour:
   RegenerateProduct: 1
   platePrefab: {fileID: 1927874038934084, guid: 36aa94bb9e7364945ad8a487c4c3ee62,
     type: 3}
+  mainCamera: {fileID: 0}
+  maxDistance: 8
+  joystickButton: 333
 --- !u!64 &1512740051
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -36352,6 +36394,9 @@ MonoBehaviour:
   RegenerateProduct: 1
   platePrefab: {fileID: 1927874038934084, guid: 36aa94bb9e7364945ad8a487c4c3ee62,
     type: 3}
+  mainCamera: {fileID: 0}
+  maxDistance: 8
+  joystickButton: 333
 --- !u!64 &1568506877
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -36653,6 +36698,9 @@ MonoBehaviour:
   RegenerateProduct: 1
   platePrefab: {fileID: 1927874038934084, guid: 36aa94bb9e7364945ad8a487c4c3ee62,
     type: 3}
+  mainCamera: {fileID: 0}
+  maxDistance: 8
+  joystickButton: 333
 --- !u!64 &1574188695
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -38087,6 +38135,9 @@ MonoBehaviour:
   RegenerateProduct: 1
   platePrefab: {fileID: 1927874038934084, guid: 36aa94bb9e7364945ad8a487c4c3ee62,
     type: 3}
+  mainCamera: {fileID: 0}
+  maxDistance: 8
+  joystickButton: 333
 --- !u!64 &1636097105
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -45966,6 +46017,9 @@ MonoBehaviour:
   RegenerateProduct: 1
   platePrefab: {fileID: 1927874038934084, guid: 36aa94bb9e7364945ad8a487c4c3ee62,
     type: 3}
+  mainCamera: {fileID: 0}
+  maxDistance: 8
+  joystickButton: 333
 --- !u!64 &1953807584
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -46809,6 +46863,9 @@ MonoBehaviour:
   RegenerateProduct: 1
   platePrefab: {fileID: 1927874038934084, guid: 36aa94bb9e7364945ad8a487c4c3ee62,
     type: 3}
+  mainCamera: {fileID: 0}
+  maxDistance: 8
+  joystickButton: 333
 --- !u!64 &1994781853
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -46947,6 +47004,9 @@ MonoBehaviour:
   RegenerateProduct: 1
   platePrefab: {fileID: 1927874038934084, guid: 36aa94bb9e7364945ad8a487c4c3ee62,
     type: 3}
+  mainCamera: {fileID: 0}
+  maxDistance: 8
+  joystickButton: 333
 --- !u!64 &1999229613
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -47221,6 +47281,9 @@ MonoBehaviour:
   RegenerateProduct: 1
   platePrefab: {fileID: 1927874038934084, guid: 36aa94bb9e7364945ad8a487c4c3ee62,
     type: 3}
+  mainCamera: {fileID: 0}
+  maxDistance: 8
+  joystickButton: 333
 --- !u!64 &2007544922
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -47611,6 +47674,9 @@ MonoBehaviour:
   RegenerateProduct: 1
   platePrefab: {fileID: 1927874038934084, guid: 36aa94bb9e7364945ad8a487c4c3ee62,
     type: 3}
+  mainCamera: {fileID: 0}
+  maxDistance: 8
+  joystickButton: 333
 --- !u!64 &2018095927
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -50542,6 +50608,9 @@ MonoBehaviour:
   RegenerateProduct: 1
   platePrefab: {fileID: 1927874038934084, guid: 36aa94bb9e7364945ad8a487c4c3ee62,
     type: 3}
+  mainCamera: {fileID: 0}
+  maxDistance: 8
+  joystickButton: 333
 --- !u!64 &2142230660
 MeshCollider:
   m_ObjectHideFlags: 0
