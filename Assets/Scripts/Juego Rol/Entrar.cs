@@ -8,6 +8,7 @@ public class Entrar : MonoBehaviour
     [SerializeField] private Image panelNegro;
     [SerializeField] private Transform puntoDestino;
     [SerializeField] private AudioSource locutor;
+    [SerializeField] private CharacterController playerController; // Agregar referencia
     
     [Header("Voces")]
     [SerializeField] private AudioClip bienvenidaClip;
@@ -53,7 +54,11 @@ public class Entrar : MonoBehaviour
         jugador.transform.rotation = puntoDestino.rotation;
 
         // Congela al jugador
-        
+        playerController = jugador.GetComponent<CharacterController>();
+        if (playerController != null)
+        {
+            playerController.enabled = false;
+        }
 
         // Fade out
         tiempoTranscurrido = 0;
@@ -65,19 +70,25 @@ public class Entrar : MonoBehaviour
             yield return null;
         }
 
-        
+        // Reproducir audios
+        if (locutor != null && bienvenidaClip != null && false)//false
+        {
+            locutor.clip = bienvenidaClip;
+            locutor.Play();
+            yield return new WaitForSeconds(bienvenidaClip.length + 1f);
 
-        // Reproducir bienvenida
-        locutor.clip = bienvenidaClip;
-        locutor.Play();
-        yield return new WaitForSeconds(bienvenidaClip.length + 1f);
+            locutor.clip = instruccionesClip;
+            locutor.Play();
+            yield return new WaitForSeconds(instruccionesClip.length);
+        }
 
-        // Reproducir instrucciones
-        locutor.clip = instruccionesClip;
-        locutor.Play();
-        yield return new WaitForSeconds(instruccionesClip.length);
+        // Descongela al jugador
+        if (playerController != null)
+        {
+            playerController.enabled = true;
+        }
 
-        //Empezar el juego
+        // Empezar el juego
         game.SetActive(true);
         visual.SetActive(true);
         city.SetActive(false);

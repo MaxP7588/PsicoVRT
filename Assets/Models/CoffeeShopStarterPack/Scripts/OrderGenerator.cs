@@ -33,6 +33,10 @@ namespace PW
 
         public GameObject orderRepPrefab;//The general prefab for order represantation
 
+        [Header("Audio")]
+        [SerializeField] private AudioSource audioSource;
+        [SerializeField] private AudioClip campanita;
+
         private void OnEnable()
         {
             //We'll listen for order events;
@@ -60,6 +64,11 @@ namespace PW
         private void BasicGameEvents_onOrderCompleted(int ID,float percentageSucccess)
         {
             currentOrderCount--;
+            
+            // Reproducir sonido de campana
+            if (audioSource && campanita)
+                audioSource.PlayOneShot(campanita);
+
             //In a common gameplay logic,
             //We would add money, play effects, maybe check our list of products to complete here,
             //by raising an another event or calling a method of a gamemanager like script.
@@ -77,6 +86,9 @@ namespace PW
         void Start()
         {
             //In a demo only manner we start calling the coroutine here on Start.
+
+            if (audioSource == null)
+                audioSource = gameObject.AddComponent<AudioSource>();
 
             StartCoroutine(GenerateOrderRoutine(3f));
 

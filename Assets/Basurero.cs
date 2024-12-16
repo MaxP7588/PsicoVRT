@@ -5,29 +5,45 @@ public class Basurero : MonoBehaviour
 {
     [Header("Referencias")]
     [SerializeField] private AudioSource sonidoBasurero;
-    
+    [SerializeField] private AudioClip sonidoBasura;
+
+    void Start()
+    {
+        // Inicializar AudioSource si no existe
+        if (sonidoBasurero == null)
+        {
+            sonidoBasurero = gameObject.AddComponent<AudioSource>();
+            sonidoBasurero.playOnAwake = false;
+            sonidoBasurero.spatialBlend = 0f; // Sonido 2D
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Basurero");
             PlayerSlots playerSlots = FindObjectOfType<PlayerSlots>();
             
-            if (playerSlots != null )
+            if (playerSlots != null)
             {
-                // Recorrer todos los slots y eliminar items
+                bool tieneItems = false;
+                
+                // Recorrer slots y verificar si hay items
                 for (int i = 0; i < 3; i++)
                 {
-                    if (playerSlots)
+                    if (playerSlots && playerSlots.slotUIObjects[i].sprite != null)
                     {
+                        tieneItems = true;
                         BasicGameEvents.RaiseOnProductDeletedFromSlot(i);
                         playerSlots.slotUIObjects[i].sprite = null;
                     }
                 }
                 
-                // Reproducir sonido
-                if (sonidoBasurero != null)
-                    sonidoBasurero.Play();
+                // Reproducir sonido solo si había items
+                if (tieneItems && sonidoBasurero != null && sonidoBasura != null)
+                {
+                    sonidoBasurero.PlayOneShot(sonidoBasura);
+                }
             }
         }
     }
