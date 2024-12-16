@@ -50,7 +50,7 @@ public class Configuraciones : MonoBehaviour
     {
         // Cargar resolución
         int resIndex = PlayerPrefs.GetInt("Resolution", 0);
-        SetResolution(resIndex);
+        //SetResolution(resIndex);
         
         // Cargar volumen
         float volume = PlayerPrefs.GetFloat("Volume", 1f);
