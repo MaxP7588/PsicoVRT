@@ -1,28 +1,18 @@
-﻿// ******------------------------------------------------------******
-// FillCupHelper.cs
-//
-// Author:
-//       K.Sinan Acar <ksa@puzzledwizard.com>
-//
-// Copyright (c) 2019 PuzzledWizard
-//
-// ******------------------------------------------------------******
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
+
 namespace PW
 {
-
     public class FillCupHelper : MonoBehaviour
     {
-
         Collider m_Collider;
-
         BewerageMaker m_Machine;
-
         public Transform fluid;
 
-        public 
-
+        [Header("Configuración Input")]
+        public KeyCode joystickButton = KeyCode.JoystickButton3;
+        public float maxDistance = 8f;
+        private Camera mainCamera;
 
         void Awake()
         {
@@ -32,29 +22,70 @@ namespace PW
                 fluid.gameObject.SetActive(false);
         }
 
+        private void Start()
+        {
+            mainCamera = Camera.main;
+        }
+
+        void Update()
+        {
+            // Verificar input de joystick
+            if (Input.GetKeyDown(joystickButton))
+            {
+                CheckRaycastAndInteract();
+            }
+        }
+
+        private void CheckRaycastAndInteract()
+        {
+            Ray ray = new Ray(mainCamera.transform.position, mainCamera.transform.forward);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, maxDistance))
+            {
+                if (hit.collider.gameObject == gameObject)
+                {
+                    ProcessInteraction();
+                }
+            }
+        }
+
+        void OnMouseDown()
+        {
+            ProcessInteraction();
+        }
+
+        private void ProcessInteraction()
+        {
+            if (m_Machine != null)
+            {
+                m_Machine.UnSetTheCup();
+                AddToPlayerSpot();
+                Destroy(gameObject);
+            }
+        }
+
         public void SetMachine(BewerageMaker maker)
         {
             m_Machine = maker;
         }
 
-        
         public void DoFill(float amount)
         {
             Debug.Log("Doing the filling");
             StartCoroutine(FillAnimation(amount));
         }
-        
+
         IEnumerator FillAnimation(float amount)
         {
             fluid.gameObject.SetActive(true);
             float timeAmount = amount;
-            float totalDist = 0- fluid.transform.localPosition.y;
+            float totalDist = 0 - fluid.transform.localPosition.y;
             float totalScale = fluid.transform.localScale.y;
             if (amount <= 0.0001f)
             {
                 fluid.transform.position += new Vector3(0f, totalDist, 0f);
                 fluid.transform.localScale = Vector3.one;
-
             }
             while (timeAmount > 0)
             {
@@ -63,7 +94,7 @@ namespace PW
                 if (1 - totalScale > 0)
                 {
                     var scaleNow = timePassed * 1f / amount;
-                    fluid.transform.localScale+= Vector3.one * scaleNow;
+                    fluid.transform.localScale += Vector3.one * scaleNow;
                     if (fluid.transform.localScale.y > 1)
                         fluid.transform.localScale = Vector3.one;
                     totalScale = fluid.transform.localScale.y;
@@ -71,24 +102,12 @@ namespace PW
                 timeAmount -= timePassed;
                 yield return null;
             }
-                fluid.transform.localScale = Vector3.one;
+            fluid.transform.localScale = Vector3.one;
         }
 
         public void FillEnded()
         {
             m_Collider.enabled = true;
-        }
-
-        void OnMouseDown()
-        {
-            if (m_Machine != null)
-            {
-                m_Machine.UnSetTheCup();
-
-                AddToPlayerSpot();
-
-                Destroy(gameObject);
-            }
         }
 
         void AddToPlayerSpot()
@@ -105,9 +124,6 @@ namespace PW
             }
             else
                 Destroy(gameObject);
-
         }
-
-
     }
 }

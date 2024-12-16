@@ -1,14 +1,4 @@
-﻿// 
-// BewerageMaker.cs
-//
-// Used on interactable products like espresso machine, mocha pot and tea pot.
-//
-// Author:
-//       K.Sinan Acar <ksa@puzzledwizard.com>
-//
-// Copyright (c) 2019 PuzzledWizard
-// ******------------------------------------------------------******
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -75,6 +65,11 @@ namespace PW
         Animator m_animator;
         #endregion
 
+        [Header("Configuración Input")]
+        public KeyCode joystickButton = KeyCode.JoystickButton3;
+        public float maxDistance = 8f;
+        private Camera mainCamera;
+
         void Start()
         {
             //find total time to process
@@ -104,7 +99,31 @@ namespace PW
                 if(m_animator!=null)
                     m_animator.enabled = false;
             }
-                
+
+            mainCamera = Camera.main;
+        }
+
+        void Update()
+        {
+            // Verificar input de joystick
+            if (Input.GetKeyDown(joystickButton))
+            {
+                CheckRaycastAndInteract();
+            }
+        }
+
+        private void CheckRaycastAndInteract()
+        {
+            Ray ray = new Ray(mainCamera.transform.position, mainCamera.transform.forward);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, maxDistance))
+            {
+                if (hit.collider.gameObject == gameObject)
+                {
+                    StartFillingStep();
+                }
+            }
         }
 
         void OnMouseUp()

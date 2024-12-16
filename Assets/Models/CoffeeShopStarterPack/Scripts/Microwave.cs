@@ -1,17 +1,8 @@
-﻿// ******------------------------------------------------------******
-// Microwave.cs
-//
-// Author:
-//       K.Sinan Acar <ksa@puzzledwizard.com>
-//
-// Copyright (c) 2019 PuzzledWizard
-//
-// ******------------------------------------------------------******
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
+
 namespace PW
 {
-
     public class Microwave : MonoBehaviour
     {
         HeatableProduct currentProduct; // The product we currently heating inside
@@ -27,6 +18,11 @@ namespace PW
 
         float heatingProcess;//how much time 
 
+        [Header("Configuración Input")]
+        public KeyCode joystickButton = KeyCode.JoystickButton3;
+        public float maxDistance = 8f;
+        private Camera mainCamera;
+
         public bool isEmpty
         {
             get
@@ -34,6 +30,7 @@ namespace PW
                 return !doorIsOpen && currentProduct == null;
             }
         }
+
         private void Start()
         {
             //Instantiate and set the UI indicator
@@ -43,15 +40,66 @@ namespace PW
                 //dont show the indicator now
                 m_progressHelper.ToggleHelper(false);
             }
+
+            mainCamera = Camera.main;
         }
-        public void SetProduct(HeatableProduct product,float heatingAmount)
+
+        void Update()
+        {
+            // Verificar input de joystick
+            if (Input.GetKeyDown(joystickButton))
+            {
+                CheckRaycastAndInteract();
+            }
+        }
+
+        private void CheckRaycastAndInteract()
+        {
+            Ray ray = new Ray(mainCamera.transform.position, mainCamera.transform.forward);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, maxDistance))
+            {
+                if (hit.collider.gameObject == gameObject)
+                {
+                    ProcessInteraction();
+                }
+            }
+        }
+
+        private void ProcessInteraction()
+        {
+            if (!doorIsOpen && !isEmpty)
+            {
+                var PlayerSlots = FindObjectOfType<PlayerSlots>();
+                if (PlayerSlots.CanHoldItem(currentProduct.orderID))
+                {
+                    BasicGameEvents.RaiseOnProductAddedToSlot(currentProduct.orderID);
+                    StartCoroutine(currentProduct.AnimateGoingToSlot());
+                    currentProduct = null;
+                    StartCoroutine(PlayDoorAnim(true, true));
+                }
+                else
+                    return;
+            }
+            else if (isEmpty)
+            {
+                StartCoroutine(PlayDoorAnim(true, true));
+            }
+        }
+
+        private void OnMouseDown()
+        {
+            ProcessInteraction();
+        }
+
+        public void SetProduct(HeatableProduct product, float heatingAmount)
         {
             if (doorIsOpen || currentProduct != null)
                 return;
             currentProduct = product;
             heatingProcess = heatingAmount;
             StartCoroutine(OpenMicrowaveAndHeatProduct());
-            
         }
 
         IEnumerator OpenMicrowaveAndHeatProduct()
@@ -59,7 +107,6 @@ namespace PW
             yield return StartCoroutine(PlayDoorAnim(true, true));
             yield return StartCoroutine(Heating());
         }
-
 
         IEnumerator PlayDoorAnim(bool open, bool alsoReverse = false)
         {
@@ -79,20 +126,18 @@ namespace PW
             {
                 var amount = Time.deltaTime;
 
-                door.transform.Rotate(new Vector3(0f, (multiplier * totalAngle) * amount / totalTime, 0f),Space.Self);
+                door.transform.Rotate(new Vector3(0f, (multiplier * totalAngle) * amount / totalTime, 0f), Space.Self);
                 curTime -= Time.deltaTime;
                 yield return null;
             }
-            door.transform.localRotation= Quaternion.Euler(new Vector3(0f, finalAngle, 0f));
+            door.transform.localRotation = Quaternion.Euler(new Vector3(0f, finalAngle, 0f));
             doorIsOpen = false;
 
             yield return new WaitForSeconds(.2f);
             if (alsoReverse)
             {
-
                 yield return StartCoroutine(PlayDoorAnim(!open, false));
             }
-
         }
 
         IEnumerator Heating()
@@ -108,31 +153,6 @@ namespace PW
                 yield return null;
             }
             m_progressHelper.ToggleHelper(false);
-
-        }
-
-        private void OnMouseDown()
-        {
-            if (!doorIsOpen && !isEmpty)
-            {
-                var PlayerSlots = FindObjectOfType<PlayerSlots>();
-                if (PlayerSlots.CanHoldItem(currentProduct.orderID))
-                {
-
-                    BasicGameEvents.RaiseOnProductAddedToSlot(currentProduct.orderID);
-                    StartCoroutine(currentProduct.AnimateGoingToSlot());
-                    currentProduct = null;
-                    StartCoroutine(PlayDoorAnim(true, true));
-                }
-                else
-                    return;
-            }
-            else if(isEmpty)
-            {
-                StartCoroutine(PlayDoorAnim(true, true));
-
-            }
-
         }
     }
 }

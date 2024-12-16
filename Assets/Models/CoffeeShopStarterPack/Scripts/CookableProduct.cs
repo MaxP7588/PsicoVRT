@@ -1,31 +1,23 @@
-﻿// ******------------------------------------------------------******
-// CookableProuct.cs
-//
-// Author:
-//       K.Sinan Acar <ksa@puzzledwizard.com>
-//
-// Copyright (c) 2019 PuzzledWizard
-//
-// ******------------------------------------------------------******
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
+
 namespace PW
 {
     public class CookableProduct : ProductGameObject
     {
         Collider m_collider;
-
         private Vector3 initialPosition;
-
         public CookingGameObject cookingObject;
-
         public GameObject platePrefab;
-
         public float cookingTimeForProduct;
 
         [HideInInspector]
         public bool IsCooked = false;
 
+        [Header("Configuración Input")]
+        public KeyCode joystickButton = KeyCode.JoystickButton3;
+        public float maxDistance = 10f;
+        private Camera mainCamera;
 
         private void Awake()
         {
@@ -35,22 +27,48 @@ namespace PW
 
         private void Start()
         {
-            //If you didn't set a Cookingobject yourself,
-            //We'll try to get one from the scene when available
             if (cookingObject == null)
                 cookingObject = FindObjectOfType<CookingGameObject>();
+            
+            mainCamera = Camera.main;
         }
 
         private void OnEnable()
         {
             IsCooked = false;
             initialPosition = transform.position;
+        }
 
+        void Update()
+        {
+            // Verificar input de joystick
+            if (Input.GetKeyDown(joystickButton))
+            {
+                CheckRaycastAndCook();
+            }
+        }
+
+        private void CheckRaycastAndCook()
+        {
+            Ray ray = new Ray(mainCamera.transform.position, mainCamera.transform.forward);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, maxDistance))
+            {
+                if (hit.collider.gameObject == gameObject)
+                {
+                    ProcessInteraction();
+                }
+            }
         }
 
         void OnMouseDown()
         {
-            //If cooking object is not available do not proceede
+            ProcessInteraction();
+        }
+
+        private void ProcessInteraction()
+        {
             if (cookingObject == null)
                 return;
             if (!cookingObject.IsEmpty() && !IsCooked)
@@ -60,39 +78,30 @@ namespace PW
 
             if (!IsCooked)
             {
-
                 targetPos = cookingObject.GetCookingPosition();
-
                 Vector3 startPos = Vector3.zero;
 
                 if (cookingObject.HasStartAnimationPos(out startPos))
                 {
-
                     transform.position = startPos;
                 }
 
                 StartCoroutine(MoveToPlace(targetPos));
             }
-
         }
 
         public override IEnumerator MoveToPlace(Vector3 targetPos)
         {
-            //When we start moving the product do the necessary animations on cooking mechanism
-            //like microwave or stove door open close animations
             cookingObject.DoDoorAnimationsIfNeeded();
             yield return new WaitForSeconds(cookingObject.doorAnimTime);
             yield return base.MoveToPlace(targetPos);
 
             m_collider.enabled = false;
 
-            //check again anyway so that we dont try to cook two things in the same place
-
             if (cookingObject.IsEmpty())
                 cookingObject.StartCooking(this);
 
             yield return null;
-
         }
 
         public void DoneCooking()
@@ -104,22 +113,21 @@ namespace PW
         {
             if (base.CanGoPlayerSlot())
             {
-                
                 StartCoroutine(AnimateGoingToSlot());
                 return true;
             }
             return false;
         }
+
         public override IEnumerator AnimateGoingToSlot()
         {
             if (RegenerateProduct)
             {
-                BasicGameEvents.RaiseInstantiatePlaceHolder(transform.parent,initialPosition,gameObject);
+                BasicGameEvents.RaiseInstantiatePlaceHolder(transform.parent, initialPosition, gameObject);
             }
             yield return new WaitForSeconds(cookingObject.doorAnimTime);
             yield return base.AnimateGoingToSlot();
             gameObject.SetActive(false);
         }
-
     }
 }

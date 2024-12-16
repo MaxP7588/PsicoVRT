@@ -1,21 +1,11 @@
-﻿// ******------------------------------------------------------******
-// ProductWithCover.cs
-//
-// Author:
-//       K.Sinan Acar <ksa@puzzledwizard.com>
-//
-// Copyright (c) 2019 PuzzledWizard
-//
-// ******------------------------------------------------------******
-
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 namespace PW
 {
-
-    public class ProductWithCover : MonoBehaviour {
-
+    public class ProductWithCover : MonoBehaviour
+    {
         Collider m_collider;
 
         public Transform coverObject;
@@ -28,10 +18,53 @@ namespace PW
 
         bool IsAnimating = false;
 
-        void OnEnable() {
+        [Header("Configuración Input")]
+        public KeyCode joystickButton = KeyCode.JoystickButton3;
+        public float maxDistance = 8f;
+        private Camera mainCamera;
+
+        void OnEnable()
+        {
             m_collider = GetComponent<Collider>();
+            mainCamera = Camera.main;
         }
 
+        void Update()
+        {
+            // Verificar input de joystick
+            if (Input.GetKeyDown(joystickButton))
+            {
+                CheckRaycastAndInteract();
+            }
+        }
+
+        private void CheckRaycastAndInteract()
+        {
+            Ray ray = new Ray(mainCamera.transform.position, mainCamera.transform.forward);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, maxDistance))
+            {
+                if (hit.collider.gameObject == gameObject)
+                {
+                    ProcessInteraction();
+                }
+            }
+        }
+
+        private void OnMouseDown()
+        {
+            ProcessInteraction();
+        }
+
+        private void ProcessInteraction()
+        {
+            if (IsAnimating)
+                return;
+
+            //Open the cover
+            StartCoroutine(OpenCloseDisplay(true, autoCloseCover));
+        }
 
         public void HandleCoverCloseClick()
         {
@@ -40,15 +73,6 @@ namespace PW
             StartCoroutine(OpenCloseDisplay(false, false));
         }
 
-
-        private void OnMouseDown()
-        {
-            if (IsAnimating)
-                return;
-
-            //Open the cover
-            StartCoroutine(OpenCloseDisplay(true, autoCloseCover));
-        }
         IEnumerator OpenCloseDisplay(bool open, bool alsoReverse = false)
         {
             IsAnimating = true;
@@ -94,8 +118,6 @@ namespace PW
             if (open)
                 coverObject.GetComponent<OnClickCoverHelper>().ActivateCollider();
             IsAnimating = false;
-
         }
-
     }
 }

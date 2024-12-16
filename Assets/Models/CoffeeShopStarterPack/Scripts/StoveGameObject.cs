@@ -1,26 +1,68 @@
-﻿// ******------------------------------------------------------******
-// StoveGameObject.cs
-//
-// Author:
-//       K.Sinan Acar <ksa@puzzledwizard.com>
-//
-// Copyright (c) 2019 PuzzledWizard
-//
-// ******------------------------------------------------------******
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
+
 namespace PW
 {
-
     public class StoveGameObject : CookingGameObject
     {
-
         public Transform doorTransform;
 
         private Vector3 progressHelperOffset = new Vector3(0f, 0.8f, 0f);
 
         private bool doorIsOpen = false;
         private bool isAnimating;
+
+        [Header("Configuración Input")]
+        public KeyCode joystickButton = KeyCode.JoystickButton3;
+        public float maxDistance = 8f;
+        private Camera mainCamera;
+
+        private void Start()
+        {
+            mainCamera = Camera.main;
+        }
+
+        void Update()
+        {
+            // Verificar input de joystick
+            if (Input.GetKeyDown(joystickButton))
+            {
+                CheckRaycastAndInteract();
+            }
+        }
+
+        private void CheckRaycastAndInteract()
+        {
+            Ray ray = new Ray(mainCamera.transform.position, mainCamera.transform.forward);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, maxDistance))
+            {
+                if (hit.collider.gameObject == gameObject)
+                {
+                    ProcessInteraction();
+                }
+            }
+        }
+
+        public override void OnMouseDown()
+        {
+            ProcessInteraction();
+        }
+
+        private void ProcessInteraction()
+        {
+            if (currentProduct != null && currentProduct.IsCooked)
+            {
+                //Try to serve currentProduct if player slots are available
+                if (currentProduct.CanGoPlayerSlot())
+                    ReadyToServe();
+            }
+            else
+            {
+                DoDoorAnimationsIfNeeded();
+            }
+        }
 
         public override void DoDoorAnimationsIfNeeded()
         {
@@ -32,7 +74,7 @@ namespace PW
         public override void StartCooking(CookableProduct product)
         {
             base.StartCooking(product);
-            m_progressHelper.transform.position +=progressHelperOffset;
+            m_progressHelper.transform.position += progressHelperOffset;
         }
 
         IEnumerator PlayDoorAnim(bool open, bool alsoReverse = false)
@@ -55,11 +97,11 @@ namespace PW
                 var amount = Time.deltaTime;
                 var eulerTemp = doorTransform.rotation.eulerAngles;
 
-                doorTransform.Rotate(new Vector3( (multiplier * totalAngle) * amount / totalTime,0f, 0f),Space.Self);
+                doorTransform.Rotate(new Vector3((multiplier * totalAngle) * amount / totalTime, 0f, 0f), Space.Self);
                 curTime -= Time.deltaTime;
                 yield return null;
             }
-            doorTransform.localRotation= Quaternion.Euler(new Vector3(finalAngle,0f, 0f));
+            doorTransform.localRotation = Quaternion.Euler(new Vector3(finalAngle, 0f, 0f));
             doorIsOpen = false;
 
             yield return new WaitForSeconds(.2f);
@@ -67,16 +109,11 @@ namespace PW
             {
                 yield return StartCoroutine(PlayDoorAnim(!open, false));
                 isAnimating = false;
-
             }
             else
-            isAnimating = false;
+            {
+                isAnimating = false;
+            }
         }
-
-        public override void OnMouseDown()
-        {
-            base.OnMouseDown();
-        }
-
     }
 }

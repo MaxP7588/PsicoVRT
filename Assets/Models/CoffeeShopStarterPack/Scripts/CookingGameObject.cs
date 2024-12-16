@@ -1,19 +1,10 @@
-﻿// ******------------------------------------------------------******
-// CookingGameObject.cs
-//
-// Author:
-//       K.Sinan Acar <ksa@puzzledwizard.com>
-//
-// Copyright (c) 2019 PuzzledWizard
-//
-// ******------------------------------------------------------******
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
+
 namespace PW
 {
     public class CookingGameObject : MonoBehaviour
     {
-
         //offset to Pivot, Vector3.zero is the default.
         public Vector3 cookingSpot;
 
@@ -33,6 +24,11 @@ namespace PW
 
         Collider m_Collider;
 
+        [Header("Configuración Input")]
+        public KeyCode joystickButton = KeyCode.JoystickButton3;
+        public float maxDistance = 8f;
+        private Camera mainCamera;
+
         private void Awake()
         {
             m_Collider = GetComponent<Collider>();
@@ -47,14 +43,52 @@ namespace PW
                 //dont show the indicator now
                 m_progressHelper.ToggleHelper(false);
             }
+
+            mainCamera = Camera.main;
         }
-        /// <summary>
-        /// We use this method to make this available through a system,
-        /// if you had more than one cooking object and a manager had selected one of the pans,
-        /// you would get this script from the array and just call this method
-        /// to get the exact position of the available cooking object.
-        /// </summary>
-        /// <returns>Cooking position of the object in WorldPos with offset</returns>
+
+        void Update()
+        {
+            // Verificar input de joystick
+            if (Input.GetKeyDown(joystickButton))
+            {
+                CheckRaycastAndInteract();
+            }
+        }
+
+        private void CheckRaycastAndInteract()
+        {
+            Ray ray = new Ray(mainCamera.transform.position, mainCamera.transform.forward);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, maxDistance))
+            {
+                if (hit.collider.gameObject == gameObject)
+                {
+                    ProcessInteraction();
+                }
+            }
+        }
+
+        public virtual void OnMouseDown()
+        {
+            ProcessInteraction();
+        }
+
+        private void ProcessInteraction()
+        {
+            if (currentProduct != null && currentProduct.IsCooked)
+            {
+                //Try to serve currentProduct if player slots are available
+                if (currentProduct.CanGoPlayerSlot())
+                    ReadyToServe();
+            }
+            else
+            {
+                DoDoorAnimationsIfNeeded();
+            }
+        }
+
         public virtual Vector3 GetCookingPosition()
         {
             return transform.position + cookingSpot;
@@ -101,7 +135,7 @@ namespace PW
         public virtual IEnumerator Cooking()
         {
             m_progressHelper.ToggleHelper(true);
-            var curTime = cookingProcess+doorAnimTime;
+            var curTime = cookingProcess + doorAnimTime;
             while (curTime > 0)
             {
                 curTime -= Time.deltaTime;
@@ -111,21 +145,6 @@ namespace PW
             currentProduct.DoneCooking();
             m_progressHelper.ToggleHelper(false);
             m_Collider.enabled = true;
-        }
-
-        public virtual void OnMouseDown()
-        {
-            if(currentProduct!=null && currentProduct.IsCooked)
-            {
-                //Try to serve currentProduct if player slots are available
-                if(currentProduct.CanGoPlayerSlot())
-                    ReadyToServe();
-            }
-            else
-            {
-                    DoDoorAnimationsIfNeeded();
-            }
-
         }
     }
 }

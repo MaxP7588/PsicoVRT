@@ -93,7 +93,7 @@ public class Entrar : MonoBehaviour
         flecha.SetActive(false);
 
         // Reproducir audios
-        if (locutor != null && bienvenidaClip != null )//false
+        if (locutor != null && bienvenidaClip != null && false)//false
         {
             locutor.clip = bienvenidaClip;
             locutor.Play();

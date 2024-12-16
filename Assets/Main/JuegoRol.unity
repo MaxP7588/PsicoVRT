@@ -2034,6 +2034,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  joystickButton: 333
+  maxDistance: 8
 --- !u!64 &82027198
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -6407,8 +6409,8 @@ Transform:
   m_GameObject: {fileID: 287144272}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.8815031, y: -12.967426, z: -13.012251}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 2.21, y: -12.967426, z: -13.12}
+  m_LocalScale: {x: 1, y: 0.9, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1719244621}
@@ -6508,7 +6510,7 @@ Transform:
   m_GameObject: {fileID: 287148124}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.00034529547, w: 0.99999994}
-  m_LocalPosition: {x: 130.58, y: 2.13, z: 51.85}
+  m_LocalPosition: {x: 130.58, y: 1.99, z: 51.85}
   m_LocalScale: {x: 1, y: 1.21, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6542,7 +6544,7 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: -0.7, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &287148130
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9236,7 +9238,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1945977513}
-  - {fileID: 2125087907}
   - {fileID: 934482408}
   - {fileID: 256846183}
   - {fileID: 1523003277}
@@ -9323,7 +9324,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f495ea547d0b4484d8f4fbb9b14854b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textoPantalla: {fileID: 2125087905}
+  textoPantalla: {fileID: 0}
   fadeDuration: 2
 --- !u!114 &420648169
 MonoBehaviour:
@@ -21234,6 +21235,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  joystickButton: 333
+  maxDistance: 8
 --- !u!64 &948167733
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -26421,6 +26424,8 @@ MonoBehaviour:
   coverObject: {fileID: 1877367693}
   openCoverOffset: {x: 0, y: 0.3, z: 0}
   autoCloseCover: 1
+  joystickButton: 333
+  maxDistance: 8
 --- !u!65 &1153923393
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -26591,6 +26596,8 @@ MonoBehaviour:
   coverObject: {fileID: 82027196}
   openCoverOffset: {x: 0, y: 0.64, z: 0}
   autoCloseCover: 1
+  joystickButton: 333
+  maxDistance: 8
 --- !u!65 &1158080628
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -32134,6 +32141,8 @@ MonoBehaviour:
   coverObject: {fileID: 1948805322}
   openCoverOffset: {x: 0, y: 0.3, z: 0}
   autoCloseCover: 1
+  joystickButton: 333
+  maxDistance: 8
 --- !u!65 &1402187268
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -32700,6 +32709,8 @@ MonoBehaviour:
   coverObject: {fileID: 2051307801}
   openCoverOffset: {x: 0, y: 0.3, z: 0}
   autoCloseCover: 1
+  joystickButton: 333
+  maxDistance: 8
 --- !u!65 &1433518458
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -34088,6 +34099,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  joystickButton: 333
+  maxDistance: 8
 --- !u!64 &1484446865
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -37312,6 +37325,8 @@ MonoBehaviour:
   coverObject: {fileID: 1484446863}
   openCoverOffset: {x: 0, y: 0.58, z: 0}
   autoCloseCover: 0
+  joystickButton: 333
+  maxDistance: 8
 --- !u!65 &1593356030
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -39092,6 +39107,8 @@ MonoBehaviour:
   coverObject: {fileID: 948167731}
   openCoverOffset: {x: 0, y: 0.3, z: 0}
   autoCloseCover: 1
+  joystickButton: 333
+  maxDistance: 8
 --- !u!65 &1680622858
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -43839,6 +43856,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  joystickButton: 333
+  maxDistance: 8
 --- !u!64 &1877367695
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -45490,17 +45509,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1945977512}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 19.74, y: 10.5, z: 10.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 420648164}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 464.375, y: 205}
-  m_SizeDelta: {x: 928.75, y: 410}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1945977514
 MonoBehaviour:
@@ -45830,6 +45849,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  joystickButton: 333
+  maxDistance: 8
 --- !u!64 &1948805324
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -48337,6 +48358,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  joystickButton: 333
+  maxDistance: 8
 --- !u!64 &2051307803
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -50048,140 +50071,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 439246646}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2125087904
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2125087907}
-  - component: {fileID: 2125087906}
-  - component: {fileID: 2125087905}
-  m_Layer: 5
-  m_Name: Text (TMP)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &2125087905
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2125087904}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_text: New Text
-  m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_fontSharedMaterials: []
-  m_fontMaterial: {fileID: 0}
-  m_fontMaterials: []
-  m_fontColor32:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
-  m_enableVertexGradient: 0
-  m_colorMode: 3
-  m_fontColorGradient:
-    topLeft: {r: 1, g: 1, b: 1, a: 1}
-    topRight: {r: 1, g: 1, b: 1, a: 1}
-    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
-    bottomRight: {r: 1, g: 1, b: 1, a: 1}
-  m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 0}
-  m_tintAllSprites: 0
-  m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: -1183493901
-  m_overrideHtmlColors: 0
-  m_faceColor:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
-  m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
-  m_fontStyle: 16
-  m_HorizontalAlignment: 2
-  m_VerticalAlignment: 256
-  m_textAlignment: 65535
-  m_characterSpacing: 0
-  m_wordSpacing: 0
-  m_lineSpacing: 0
-  m_lineSpacingMax: 0
-  m_paragraphSpacing: 0
-  m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
-  m_wordWrappingRatios: 0.4
-  m_overflowMode: 0
-  m_linkedTextComponent: {fileID: 0}
-  parentLinkedComponent: {fileID: 0}
-  m_enableKerning: 1
-  m_enableExtraPadding: 0
-  checkPaddingRequired: 0
-  m_isRichText: 1
-  m_parseCtrlCharacters: 1
-  m_isOrthographic: 1
-  m_isCullingEnabled: 0
-  m_horizontalMapping: 0
-  m_verticalMapping: 0
-  m_uvLineOffset: 0
-  m_geometrySortingOrder: 0
-  m_IsTextObjectScaleStatic: 0
-  m_VertexBufferAutoSizeReduction: 0
-  m_useMaxVisibleDescender: 1
-  m_pageToDisplay: 1
-  m_margin: {x: -201.70204, y: -28.309433, z: -208.78088, w: 0}
-  m_isUsingLegacyAnimationComponent: 0
-  m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
-  m_baseMaterial: {fileID: 0}
-  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!222 &2125087906
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2125087904}
-  m_CullTransparentMesh: 1
---- !u!224 &2125087907
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2125087904}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 420648164}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!4 &2125267397 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: ffa95796af8d5884f9d08f66e6bb627e,
