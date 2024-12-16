@@ -36,6 +36,12 @@ public class MenuPrincipal : MonoBehaviour
         StartCoroutine(CargarEscena(SceneManager.GetActiveScene().buildIndex + 4));
     }
 
+    public void calibracion()
+    {
+        Debug.Log("Iniciando calibracion...");
+        StartCoroutine(CargarEscena(SceneManager.GetActiveScene().buildIndex + 5));
+    }
+
     private IEnumerator CargarEscena(int sceneIndex)
     {
         Debug.Log("Cargando escena...");

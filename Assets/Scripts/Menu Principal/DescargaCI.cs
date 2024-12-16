@@ -8,7 +8,7 @@ using TMPro;
 public class DescargaCI : MonoBehaviour
 {
     [Header("Configuración")]
-    [SerializeField] private string pdfUrl = "https://drive.google.com/file/d/1F0EP7075qd95OebdToq1WIY9BGV7pZCh/view?usp=drive_link";
+    [SerializeField] private string pdfUrl = "https://drive.usercontent.google.com/u/2/uc?id=1F0EP7075qd95OebdToq1WIY9BGV7pZCh&export=download";
     [SerializeField] private string nombreArchivo = "consentimiento_informado.pdf";
     
     [Header("Referencias UI")]
