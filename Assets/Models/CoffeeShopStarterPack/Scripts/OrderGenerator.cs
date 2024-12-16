@@ -14,11 +14,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
+using TMPro;
 
 namespace PW
 {
     public class OrderGenerator : MonoBehaviour
     {
+        [Header("UI")]
+        [SerializeField] private TextMeshProUGUI textoTemporizador;
+        [SerializeField] private TextMeshProUGUI textoOrdenes;
+        [SerializeField] private TextMeshProUGUI textoFinal;
+        
+        [Header("Configuración Juego")]
+        [SerializeField] private float tiempoTotal = 5f; // 3 minutos
+        private float tiempoRestante;
+        private int ordenesCompletadas = 0;
+
         //This limits generating orders constantly
         public int MaxConcurrentOrder=2;
 
@@ -36,6 +47,10 @@ namespace PW
         [Header("Audio")]
         [SerializeField] private AudioSource audioSource;
         [SerializeField] private AudioClip campanita;
+
+        private bool juegoTerminado = false;
+
+        private Entrar entrarScript;
 
         private void OnEnable()
         {
@@ -64,22 +79,13 @@ namespace PW
         private void BasicGameEvents_onOrderCompleted(int ID,float percentageSucccess)
         {
             currentOrderCount--;
+            ordenesCompletadas++;
             
             // Reproducir sonido de campana
             if (audioSource && campanita)
                 audioSource.PlayOneShot(campanita);
 
-            //In a common gameplay logic,
-            //We would add money, play effects, maybe check our list of products to complete here,
-            //by raising an another event or calling a method of a gamemanager like script.
-            //i.e. GameManager.CheckMilestonesForOrderID(ID)
-            //or BasicGameEvents.onMoneyIncreased(ID,percentageSuccess)
-            //percentage of Success can define the xp we got, or money multiplier and so forth.
-
-
-            //You could also use another float as a third parameter to check if an order is overcooked,
-            //or just perfect.
-            //You could also check combo multipliers for multiple fast deliveries
+            ActualizarUI();
         }
 
 
@@ -90,10 +96,32 @@ namespace PW
             if (audioSource == null)
                 audioSource = gameObject.AddComponent<AudioSource>();
 
+            // Inicializar temporizador
+            textoOrdenes.gameObject.SetActive(true);
+            textoTemporizador.gameObject.SetActive(true);
+            tiempoRestante = tiempoTotal;
+            ActualizarUI();
+            
             StartCoroutine(GenerateOrderRoutine(3f));
 
+            // Obtener referencia al script Entrar
+            entrarScript = FindObjectOfType<Entrar>();
         }
 
+        void Update()
+        {
+            if (juegoTerminado) return;
+
+            if (tiempoRestante > 0f)
+            {
+                tiempoRestante -= Time.deltaTime;
+                ActualizarUI();
+            }
+            else
+            {
+                FinalizarJuego();
+            }
+        }
 
         public IEnumerator GenerateOrderRoutine(float intervalTime)
         {
@@ -141,6 +169,59 @@ namespace PW
             if (spriteIndex<0)
                 return null;
             return orderSprites[spriteIndex];
+        }
+
+        private void ActualizarUI()
+        {
+            if(textoTemporizador != null && textoOrdenes != null)
+            {
+                int minutos = Mathf.FloorToInt(tiempoRestante / 60);
+                int segundos = Mathf.FloorToInt(tiempoRestante % 60);
+                textoTemporizador.text = string.Format("{0:00}:{1:00}", minutos, segundos);
+                textoOrdenes.text = $"Órdenes: {ordenesCompletadas}";
+            }
+        }
+
+        private void FinalizarJuego()
+        {
+            if (juegoTerminado) return;
+            
+            Debug.Log("¡Juego terminado!");
+
+            juegoTerminado = true;
+            StopAllCoroutines();
+
+            // Desactivar Manager de órdenes
+
+            
+            // Limpiar órdenes pendientes
+            ServeOrder[] ordenesActivas = FindObjectsOfType<ServeOrder>();
+            Debug.Log($"Ordenes activas: {ordenesActivas.Length}");
+            foreach (var orden in ordenesActivas)
+            {
+                Debug.Log($"Destruyendo orden {orden.gameObject.name}");
+                Destroy(orden.gameObject);
+            }
+
+            // Mostrar pantalla final
+            Debug.Log("Mostrando pantalla final");
+            textoFinal.gameObject.SetActive(true);
+            textoFinal.text = $"¡Juego terminado!\nÓrdenes completadas: {ordenesCompletadas}";
+            
+            // Ocultar UI del juego
+            Debug.Log("Ocultando UI del juego");
+            textoTemporizador.gameObject.SetActive(false);
+            textoOrdenes.gameObject.SetActive(false);
+            
+            // Oscurecer pantalla
+            Debug.Log("Oscureciendo pantalla");
+            if (entrarScript != null)
+            {
+                Debug.Log("Entrar script encontrado");
+                entrarScript.OscurecerPantalla();
+            }
+
+            Debug.Log($"¡Juego terminado! Órdenes completadas: {ordenesCompletadas}");
         }
     }
 }

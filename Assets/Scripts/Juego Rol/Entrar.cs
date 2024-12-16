@@ -24,6 +24,25 @@ public class Entrar : MonoBehaviour
     [SerializeField] private GameObject city ;
     [SerializeField] private GameObject flecha ;
 
+    public void OscurecerPantalla()
+    {
+        StartCoroutine(FadeToBlack());
+        game.SetActive(false);
+        visual.SetActive(false);
+        
+    }
+
+    private IEnumerator FadeToBlack()
+    {
+        float tiempoTranscurrido = 0;
+        while (tiempoTranscurrido < duracionFade)
+        {
+            tiempoTranscurrido += Time.deltaTime;
+            float alfa = Mathf.Lerp(0, 1, tiempoTranscurrido / duracionFade);
+            panelNegro.color = new Color(0, 0, 0, alfa);
+            yield return null;
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -70,6 +89,9 @@ public class Entrar : MonoBehaviour
             yield return null;
         }
 
+        // Descativar flecha
+        flecha.SetActive(false);
+
         // Reproducir audios
         if (locutor != null && bienvenidaClip != null && false)//false
         {
@@ -92,6 +114,5 @@ public class Entrar : MonoBehaviour
         game.SetActive(true);
         visual.SetActive(true);
         city.SetActive(false);
-        flecha.SetActive(false);
     }
 }
