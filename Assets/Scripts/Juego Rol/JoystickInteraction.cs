@@ -18,7 +18,7 @@ public class JoystickInteraction : MonoBehaviour
         Debug.DrawLine(rayOrigin, rayOrigin + rayDirection, Color.red);
 
         // Verificar input de joystick
-        if (Input.GetKeyDown(joystickButton) )
+        if (Input.GetKeyDown(joystickButton))
         {
             CheckRaycastAndInteract();
         }

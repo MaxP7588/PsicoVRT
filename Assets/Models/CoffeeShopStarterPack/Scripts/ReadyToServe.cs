@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace PW
 {
-    public class ReadyToServe : ProductGameObject
+    public class ReadyToServe : ProductGameObject, IInteractable
     {
         [Header("Referencias")]
         public GameObject platePrefab;
@@ -27,7 +27,26 @@ namespace PW
 
         void Update()
         {
-            
+
+            // Verificar input de joystick
+            if (Input.GetKeyDown(joystickButton))
+            {
+                CheckRaycastAndServe();
+            }
+        }
+
+        private void CheckRaycastAndServe()
+        {
+            Ray ray = new Ray(mainCamera.transform.position, mainCamera.transform.forward);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, maxDistance))
+            {
+                if (hit.collider.gameObject == gameObject && canInteract)
+                {
+                    ServeProduct();
+                }
+            }
         }
 
         void OnMouseDown()
@@ -36,6 +55,10 @@ namespace PW
                 ServeProduct();
         }
 
+        public void ProcessInteraction()
+        {
+            ServeProduct();
+        }
 
         private void ServeProduct()
         {
