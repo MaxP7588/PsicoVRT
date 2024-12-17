@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class ElevadorCorportamiento : MonoBehaviour
 {
+    [Header("Referencias")]
+    [SerializeField] private GameObject flecha; // Referencia al objeto flecha
     public Transform puertaD; // Referencia a la puerta derecha
     public Transform puertaI; // Referencia a la puerta izquierda
     public float speed = 2.0f; // Velocidad a la que sube el elevador
@@ -25,7 +27,7 @@ public class ElevadorCorportamiento : MonoBehaviour
         {
             // Mover el elevador hacia arriba
             transform.position += Vector3.up * speed * Time.deltaTime;
-            player.transform.position = new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z);
+            player.transform.position = new Vector3(player.transform.position.x, transform.position.y+0.4f, player.transform.position.z);
 
             // Detener el elevador cuando alcance la altura máxima
             if (transform.position.y >= maxHeight)
@@ -50,6 +52,7 @@ public class ElevadorCorportamiento : MonoBehaviour
             //set parent
             player = other.gameObject;
             player.transform.SetParent(transform);
+            flecha.SetActive(false); // Desactivar flecha
             StartCoroutine(StartElevator());
         }
     }

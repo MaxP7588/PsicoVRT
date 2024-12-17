@@ -5,10 +5,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float speed = 3f;
-    public float climbSpeed = 2f; // Velocidad de subida de escaleras
     public Transform cameraTransform; // Referencia a la transformación de la cámara
     private CharacterController characterController;
-    private bool isClimbing = false; // Indica si el personaje está subiendo una escalera
     private Vector3 velocity;
 
     void Start()
@@ -43,7 +41,7 @@ public class PlayerController : MonoBehaviour
         characterController.Move(movement * Time.deltaTime);
 
         // Aplicar gravedad manualmente
-        if (!characterController.isGrounded && !isClimbing)
+        if (!characterController.isGrounded)
         {
             velocity.y += Physics.gravity.y * Time.deltaTime;
         }

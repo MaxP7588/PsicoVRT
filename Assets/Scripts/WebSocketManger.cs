@@ -14,8 +14,8 @@ public class WebRTCManager : MonoBehaviour
     // Parámetros ajustables para rendimiento
     [SerializeField] private int textureWidth = 720;  // Reducido de 720
     [SerializeField] private int textureHeight = 480; // Reducido de 480
-    [SerializeField] private int jpgQuality = 10;     // Reducido de 75
-    [SerializeField] private float frameDelay = 0.1f; // ~15 FPS (reducido de 30 FPS)
+    [SerializeField] private int jpgQuality = 18;     // Reducido de 75
+    [SerializeField] private float frameDelay = 0.01f; // ~15 FPS (reducido de 30 FPS)
     
     private float lastFrameTime;
     private int framesSentInLastSecond = 0;

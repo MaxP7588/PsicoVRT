@@ -8,6 +8,9 @@ public class IniciarSesion : MonoBehaviour
     public TMP_InputField passwordInput;
     
     private MySQLConnector mySQLConnector;
+    [SerializeField] private GameObject menuPrincipal;
+    [SerializeField] private GameObject menuInicioSesion;
+
 
     void Start()
     {
@@ -43,7 +46,8 @@ public class IniciarSesion : MonoBehaviour
         {
             Debug.Log("Inicio de sesión exitoso");
             LimpiarCampos();
-            // Aquí puedes agregar código para cambiar de escena o mostrar el menú principal
+            menuInicioSesion.SetActive(false);
+            menuPrincipal.SetActive(true);
         }
         else
         {
