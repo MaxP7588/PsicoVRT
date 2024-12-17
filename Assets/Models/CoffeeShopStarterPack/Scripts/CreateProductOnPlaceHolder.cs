@@ -21,32 +21,8 @@ namespace PW
         }
 
         private void Update()
-        {
-            // Dibujar la línea del raycast en la escena
-            Vector3 rayOrigin = mainCamera.transform.position;
-            Vector3 rayDirection = mainCamera.transform.forward * maxDistance;
-            Debug.DrawLine(rayOrigin, rayOrigin + rayDirection, Color.red);
-
-            // Verificar input de joystick
-            if (Input.GetKeyDown(joystickButton))
-            {
-                CheckRaycastAndCreate();
-            }
-        }
-
-        private void CheckRaycastAndCreate()
-        {
-            Ray ray = new Ray(mainCamera.transform.position, mainCamera.transform.forward);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit, maxDistance))
-            {
-                if (hit.collider.gameObject == gameObject)
-                {
-                    ProcessInteraction();
-                }
-            }
-        }
+        { 
+        } 
 
         private void OnMouseDown()
         {

@@ -31,25 +31,7 @@ namespace PW
 
         void Update()
         {
-            // Verificar input de joystick
-            if (Input.GetKeyDown(joystickButton))
-            {
-                CheckRaycastAndInteract();
-            }
-        }
-
-        private void CheckRaycastAndInteract()
-        {
-            Ray ray = mainCamera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit, maxDistance))
-            {
-                if (hit.collider.gameObject == gameObject)
-                {
-                    ProcessInteraction();
-                }
-            }
+            
         }
 
         private void OnMouseDown()

@@ -42,28 +42,8 @@ namespace PW
         }
 
         void Update()
-        {
-
-            // Verificar input de joystick
-            if (Input.GetKeyDown(joystickButton))
-            {
-                CheckRaycastAndCook();
-            }
-        }
-
-        private void CheckRaycastAndCook()
-        {
-            Ray ray = new Ray(raycastOrigin.position, raycastOrigin.forward);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit, maxDistance))
-            {
-                if (hit.collider.gameObject == gameObject)
-                {
-                    ProcessInteraction();
-                }
-            }
-        }
+        { 
+        } 
 
         void OnMouseDown()
         {

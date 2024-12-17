@@ -27,11 +27,7 @@ namespace PW
 
         void Update()
         {
-            // Verificar input de joystick
-            if (Input.GetKeyDown(joystickButton) && canInteract)
-            {
-                CheckRaycastAndServe();
-            }
+            
         }
 
         void OnMouseDown()
@@ -40,19 +36,6 @@ namespace PW
                 ServeProduct();
         }
 
-        private void CheckRaycastAndServe()
-        {
-            Ray ray = mainCamera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit, maxDistance))
-            {
-                if (hit.collider.gameObject == gameObject)
-                {
-                    ServeProduct();
-                }
-            }
-        }
 
         private void ServeProduct()
         {
