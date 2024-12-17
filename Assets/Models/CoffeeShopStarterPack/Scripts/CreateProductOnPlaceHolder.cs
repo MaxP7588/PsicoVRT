@@ -22,6 +22,11 @@ namespace PW
 
         private void Update()
         {
+            // Dibujar la línea del raycast en la escena
+            Vector3 rayOrigin = mainCamera.transform.position;
+            Vector3 rayDirection = mainCamera.transform.forward * maxDistance;
+            Debug.DrawLine(rayOrigin, rayOrigin + rayDirection, Color.red);
+
             // Verificar input de joystick
             if (Input.GetKeyDown(joystickButton))
             {
@@ -38,17 +43,17 @@ namespace PW
             {
                 if (hit.collider.gameObject == gameObject)
                 {
-                    CreateProduct();
+                    ProcessInteraction();
                 }
             }
         }
 
         private void OnMouseDown()
         {
-            CreateProduct();
+            ProcessInteraction();
         }
 
-        private void CreateProduct()
+        public void ProcessInteraction()
         {
             var go = GameObject.Instantiate(objectToGenerate, transform.parent);
             Destroy(objectToGenerate);

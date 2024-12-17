@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using PW; // Add the correct namespace for IInteractable
 
 namespace PW
 {
@@ -18,6 +19,7 @@ namespace PW
         public KeyCode joystickButton = KeyCode.JoystickButton3;
         public float maxDistance = 10f;
         private Camera mainCamera;
+        public Transform raycastOrigin; // Nuevo objeto para lanzar el raycast
 
         private void Awake()
         {
@@ -41,6 +43,7 @@ namespace PW
 
         void Update()
         {
+
             // Verificar input de joystick
             if (Input.GetKeyDown(joystickButton))
             {
@@ -50,7 +53,7 @@ namespace PW
 
         private void CheckRaycastAndCook()
         {
-            Ray ray = new Ray(mainCamera.transform.position, mainCamera.transform.forward);
+            Ray ray = new Ray(raycastOrigin.position, raycastOrigin.forward);
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit, maxDistance))
@@ -67,7 +70,7 @@ namespace PW
             ProcessInteraction();
         }
 
-        private void ProcessInteraction()
+        public void ProcessInteraction()
         {
             if (cookingObject == null)
                 return;
