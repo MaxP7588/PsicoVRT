@@ -149,7 +149,7 @@ namespace PW
             //We could store the ID of the object to track last generated orders,
             //Totally random generation may create the same order in row repeatedly.
 
-            int spriteIndex = Random.Range(10, 12);
+            int spriteIndex = Random.Range(0, orderSprites.Length);
 
             int orderID = orderedProducts[spriteIndex];
 
