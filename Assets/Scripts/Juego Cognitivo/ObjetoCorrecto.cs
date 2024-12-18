@@ -25,12 +25,12 @@ public class ObjetoCorrecto : MonoBehaviour
                 // Verificar si el objeto en el trigger es el nuevo objeto
                 if (memoryTest.getNewObj().gameObject == other.gameObject)
                 {
-                    text.setTextoPantalla("¡Encontraste el objeto!");
+                    text.setTextoPantalla("Â¡Encontraste el objeto!");
                     memoryTest.reiniciar();
                 }
                 else
                 {
-                    text.setTextoPantalla("¡Ese no es el objeto!");
+                    text.setTextoPantalla("Â¡Ese no es el objeto!");
                     memoryTest.reiniciar();
                 }
             }

@@ -70,7 +70,6 @@ public class Entrar : MonoBehaviour
 
         // Mover jugador
         jugador.transform.position = puntoDestino.position;
-        jugador.transform.rotation = puntoDestino.rotation;
 
         // Congela al jugador
         playerController = jugador.GetComponent<CharacterController>();

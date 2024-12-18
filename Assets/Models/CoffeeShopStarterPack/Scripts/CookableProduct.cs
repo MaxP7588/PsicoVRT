@@ -4,7 +4,7 @@ using PW; // Add the correct namespace for IInteractable
 
 namespace PW
 {
-    public class CookableProduct : ProductGameObject
+    public class CookableProduct : ProductGameObject, IInteractable
     {
         Collider m_collider;
         private Vector3 initialPosition;
@@ -42,8 +42,28 @@ namespace PW
         }
 
         void Update()
-        { 
-        } 
+        {
+
+            // Verificar input de joystick
+            if (Input.GetKeyDown(joystickButton))
+            {
+                CheckRaycastAndInteract();
+            }
+        }
+
+        private void CheckRaycastAndInteract()
+        {
+            Ray ray = new Ray(raycastOrigin != null ? raycastOrigin.position : mainCamera.transform.position, raycastOrigin != null ? raycastOrigin.forward : mainCamera.transform.forward);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, maxDistance))
+            {
+                if (hit.collider.gameObject == gameObject)
+                {
+                    ProcessInteraction();
+                }
+            }
+        }
 
         void OnMouseDown()
         {

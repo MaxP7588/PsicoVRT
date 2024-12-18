@@ -10,22 +10,23 @@ public class MemoryTest : MonoBehaviour
     public float initialViewTime = 5.0f; // Tiempo que se muestran los objetos al principio
     public float curtainCloseTime = 2.0f; // Tiempo que la cortina permanece cerrada
     public GameObject player; // El objeto del jugador
-    public Camera playerCamera; // La c�mara del jugador
+    public Camera playerCamera; // La cámara del jugador
 
-    private Vector3 initialPlayerPosition = new Vector3(-1.55f, 1.0f, 0.0f); // Posici�n inicial del jugador
-    private Quaternion initialPlayerRotation = Quaternion.Euler(0f, -180f, 0f); // Rotaci�n inicial del jugador
-    private List<Vector3> posicionesOriginales; // Lista de la posici�n de cada objeto para devolverlo a su sitio
-    private List<Quaternion> rotacionesOriginales; // Lista de la rotaci�n de cada objeto para devolverlo a su sitio
-    private List<GameObject> shownObjects; // Lista de objetos que se mostrar�n inicialmente
-    private GameObject newObject; // Nuevo objeto que aparecer� despu�s
+    private Vector3 initialPlayerPosition = new Vector3(-1.55f, 1.0f, 0.0f); // Posición inicial del jugador
+    private Quaternion initialPlayerRotation = Quaternion.Euler(0f, 0f, 0f); // Rotación inicial del jugador
+    private List<Vector3> posicionesOriginales; // Lista de la posición de cada objeto para devolverlo a su sitio
+    private List<Quaternion> rotacionesOriginales; // Lista de la rotación de cada objeto para devolverlo a su sitio
+    private List<GameObject> shownObjects; // Lista de objetos que se mostrarán inicialmente
+    private GameObject newObject; // Nuevo objeto que aparecerá después
     private int numObjetos;
     private NivelJuegoMemoria memoria;
     private textoEnPantalla textoEnPantalla;
     private PlayerController playerController; // Controlador del jugador
+    private bool gameInProgress = false; // Variable para controlar si el juego está en progreso
 
     void Start()
     {
-        // Asegurarse de que la cortina est� inicialmente abierta
+        // Asegurarse de que la cortina esté inicialmente abierta
         curtain.SetActive(false);
         shownObjects = new List<GameObject>();
         memoria = FindObjectOfType<NivelJuegoMemoria>();
@@ -44,7 +45,7 @@ public class MemoryTest : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.JoystickButton1) || Input.GetKeyDown(KeyCode.F))
+        if (!gameInProgress && (Input.GetKeyDown(KeyCode.JoystickButton1) || Input.GetKeyDown(KeyCode.F)))
         {
             reiniciar();
             StartMemoryTest();
@@ -56,6 +57,7 @@ public class MemoryTest : MonoBehaviour
         numObjetos = memoria.elNivelEs();
         if (numObjetos != 0)
         {
+            gameInProgress = true; // Marcar que el juego está en progreso
             StartCoroutine(MemoryTestCoroutine());
         }
         else
@@ -69,11 +71,10 @@ public class MemoryTest : MonoBehaviour
         // Desactivar el control del jugador
         playerController.enabled = false;
 
-        // Teletransportar al jugador a la posici�n y rotaci�n iniciales
+        // Teletransportar al jugador a la posición y rotación iniciales
         player.transform.position = initialPlayerPosition;
-        playerCamera.transform.rotation = initialPlayerRotation;
 
-        // Asegurarse de que la lista est� vac�a al inicio de cada prueba
+        // Asegurarse de que la lista esté vacía al inicio de cada prueba
         shownObjects.Clear();
 
         foreach (GameObject obj in objectsToHide)
@@ -112,7 +113,7 @@ public class MemoryTest : MonoBehaviour
         curtain.SetActive(true);
         yield return new WaitForSeconds(curtainCloseTime);
 
-        // Seleccionar un nuevo objeto que no est� en la lista de mostrados
+        // Seleccionar un nuevo objeto que no esté en la lista de mostrados
         List<int> remainingIndices = new List<int>();
         for (int i = 0; i < objectsToHide.Count; i++)
         {
@@ -159,7 +160,7 @@ public class MemoryTest : MonoBehaviour
     {
         for (int i = 0; i < objectsToHide.Count; i++)
         {
-            // Regresar a su posici�n y rotaci�n originales
+            // Regresar a su posición y rotación originales
             objectsToHide[i].transform.position = posicionesOriginales[i];
             objectsToHide[i].transform.rotation = rotacionesOriginales[i];
             objectsToHide[i].SetActive(false);
@@ -167,6 +168,6 @@ public class MemoryTest : MonoBehaviour
 
         newObject = null;
         shownObjects.Clear();
+        gameInProgress = false; // Marcar que el juego ha terminado
     }
-
 }

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 namespace PW
 {
     [RequireComponent(typeof(Collider))]
-    public class BewerageMaker : MonoBehaviour
+    public class BewerageMaker : MonoBehaviour, IInteractable
     {
         #region AnimationSettings
         [SerializeField]
@@ -105,15 +105,39 @@ namespace PW
 
         void Update()
         {
-             
-        } 
+
+            // Verificar input de joystick
+            if (Input.GetKeyDown(joystickButton))
+            {
+                CheckRaycastAndInteract();
+            }
+        }
+
+        private void CheckRaycastAndInteract()
+        {
+            Ray ray = new Ray(mainCamera.transform.position, mainCamera.transform.forward);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, maxDistance))
+            {
+                if (hit.collider.gameObject == gameObject && canFillCup)
+                {
+                    ProcessInteraction();
+                }
+            }
+        }
 
         void OnMouseUp()
         {
             if (canFillCup)
             {
-                StartFillingStep();
+                ProcessInteraction();
             }
+        }
+
+        public void ProcessInteraction()
+        {
+            StartFillingStep();
         }
 
         void StartFillingStep()
@@ -224,8 +248,6 @@ namespace PW
 
         }
 
-
-
         void OnFillEnded()
         {
             //hide the UI indicator
@@ -247,7 +269,6 @@ namespace PW
 
         }
 
-        
         void SetTheCup()
         {
             GameObject cup = Instantiate(cupType, fillCupSpot);
@@ -318,6 +339,5 @@ namespace PW
 
             yield return null;
         }
-
     }
 }
