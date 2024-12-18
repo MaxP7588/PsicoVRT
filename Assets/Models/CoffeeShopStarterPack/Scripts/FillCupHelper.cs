@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace PW
 {
-    public class FillCupHelper : MonoBehaviour
+    public class FillCupHelper : MonoBehaviour, IInteractable
     {
         Collider m_Collider;
         BewerageMaker m_Machine;
@@ -29,9 +29,27 @@ namespace PW
 
         void Update()
         {
-            
+
+            // Verificar input de joystick
+            if (Input.GetKeyDown(joystickButton))
+            {
+                CheckRaycastAndInteract();
+            }
         }
- 
+
+        private void CheckRaycastAndInteract()
+        {
+            Ray ray = new Ray(mainCamera.transform.position, mainCamera.transform.forward);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, maxDistance))
+            {
+                if (hit.collider.gameObject == gameObject)
+                {
+                    ProcessInteraction();
+                }
+            }
+        }
 
         void OnMouseDown()
         {

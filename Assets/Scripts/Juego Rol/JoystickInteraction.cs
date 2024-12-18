@@ -8,7 +8,6 @@ public class JoystickInteraction : MonoBehaviour
     public Camera cam;
     public float maxDistance = 8.0f; // La distancia máxima del rayo
     public KeyCode joystickButton = KeyCode.JoystickButton3;
-    public TextMeshProUGUI debugText;
 
     void Update()
     {
@@ -29,10 +28,6 @@ public class JoystickInteraction : MonoBehaviour
     {
         Ray ray = new Ray(cam.transform.position, cam.transform.forward);
         RaycastHit hit;
-
-        //debug text
-        //debugText.text = "Raycast: " + ray + "\n " + "camp: " + cam.transform.position + "\n " + "camf: " + cam.transform.forward; 
-        //Debug.Log("Raycast: " + ray + "\n " + "camp: " + cam.transform.position + "\n " + "camf: " + cam.transform.forward);
 
         if (Physics.Raycast(ray, out hit, maxDistance))
         {

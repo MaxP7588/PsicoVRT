@@ -6,7 +6,8 @@ using UnityEngine.Events;
 namespace PW
 {
     [RequireComponent(typeof(Collider))]
-    public class OnClickCoverHelper : MonoBehaviour {
+    public class OnClickCoverHelper : MonoBehaviour, IInteractable
+    {
         [SerializeField]
         public UnityEvent methodToCall;
         Collider m_collider;
@@ -25,6 +26,25 @@ namespace PW
 
         void Update()
         {
+            // Verificar input de joystick
+            if (Input.GetKeyDown(joystickButton))
+            {
+                CheckRaycastAndInteract();
+            }
+        }
+
+        private void CheckRaycastAndInteract()
+        {
+            Ray ray = new Ray(mainCamera.transform.position, mainCamera.transform.forward);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, maxDistance))
+            {
+                if (hit.collider.gameObject == gameObject)
+                {
+                    ProcessInteraction();
+                }
+            }
         }
 
         private void OnMouseDown()

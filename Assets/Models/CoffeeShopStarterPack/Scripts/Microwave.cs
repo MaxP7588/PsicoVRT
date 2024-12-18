@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace PW
 {
-    public class Microwave : MonoBehaviour
+    public class Microwave : MonoBehaviour, IInteractable
     {
         HeatableProduct currentProduct; // The product we currently heating inside
         bool doorIsOpen;
@@ -46,8 +46,27 @@ namespace PW
 
         void Update()
         {
-             
-        } 
+
+            // Verificar input de joystick
+            if (Input.GetKeyDown(joystickButton))
+            {
+                CheckRaycastAndInteract();
+            }
+        }
+
+        private void CheckRaycastAndInteract()
+        {
+            Ray ray = new Ray(mainCamera.transform.position, mainCamera.transform.forward);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, maxDistance))
+            {
+                if (hit.collider.gameObject == gameObject)
+                {
+                    ProcessInteraction();
+                }
+            }
+        }
 
         public void ProcessInteraction()
         {
