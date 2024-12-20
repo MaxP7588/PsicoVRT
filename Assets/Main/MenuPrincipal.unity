@@ -12463,6 +12463,7 @@ GameObject:
   - component: {fileID: 1628193706}
   - component: {fileID: 1628193705}
   - component: {fileID: 1628193707}
+  - component: {fileID: 1628193708}
   m_Layer: 5
   m_Name: MenuDescarga
   m_TagString: Untagged
@@ -12544,11 +12545,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b50add44b0c122449a11a90748ec3c2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pdfUrl: https://drive.google.com/file/d/1F0EP7075qd95OebdToq1WIY9BGV7pZCh/view?usp=drive_link
-  nombreArchivo: consentimiento_informado.pdf
+  pdfUrl: https://drive.usercontent.google.com/u/2/uc?id=1F0EP7075qd95OebdToq1WIY9BGV7pZCh&export=download
   botonDescarga: {fileID: 1020139639}
   textoEstado: {fileID: 1512157587}
-  panelDescarga: {fileID: 1148608632}
+--- !u!114 &1628193708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1628193703}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03c1ab9800162b743926b527cf3e4c29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nombreArchivo: consentimiento_informado.pdf
+  rutaPersonalizada: Assets/Models/PDFs/
+  botonGuardar: {fileID: 1020139639}
+  textoEstado: {fileID: 1512157587}
 --- !u!1 &1628817490
 GameObject:
   m_ObjectHideFlags: 0
@@ -14258,6 +14273,7 @@ GameObject:
   - component: {fileID: 2015822076}
   - component: {fileID: 2015822078}
   - component: {fileID: 2015822077}
+  - component: {fileID: 2015822079}
   m_Layer: 5
   m_Name: MenuConfiguraciones
   m_TagString: Untagged
@@ -14332,6 +14348,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2015822075}
   m_CullTransparentMesh: 1
+--- !u!114 &2015822079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2015822075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e3a29b6c19d93e40a96fc4a8e481538, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  botonRestablecer: {fileID: 557867138}
 --- !u!1 &2027502975
 GameObject:
   m_ObjectHideFlags: 0
