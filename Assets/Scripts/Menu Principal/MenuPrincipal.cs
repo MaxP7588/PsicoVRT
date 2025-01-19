@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class MenuPrincipal : MonoBehaviour
 {
+    public PantallaDeCarga pantallaDeCarga;
 
     public void Start()
     {
@@ -15,38 +16,30 @@ public class MenuPrincipal : MonoBehaviour
     public void jugarTutorial()
     {
         Debug.Log("Iniciando tutorial...");
-        StartCoroutine(CargarEscena(SceneManager.GetActiveScene().buildIndex + 1));
+        pantallaDeCarga.CargarEscena(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     public void juegoCognitivo()
     {
         Debug.Log("Iniciando juego cognitivo...");
-        StartCoroutine(CargarEscena(SceneManager.GetActiveScene().buildIndex + 2));
+        pantallaDeCarga.CargarEscena(SceneManager.GetActiveScene().buildIndex + 2);
     }
 
     public void juegoFobiaAltura()
     {
         Debug.Log("Iniciando juego cognitivo...");
-        StartCoroutine(CargarEscena(SceneManager.GetActiveScene().buildIndex + 3));
+        pantallaDeCarga.CargarEscena(SceneManager.GetActiveScene().buildIndex + 3);
     }
 
     public void juegoRol()
     {
         Debug.Log("Iniciando juego de rol...");
-        StartCoroutine(CargarEscena(SceneManager.GetActiveScene().buildIndex + 4));
+        pantallaDeCarga.CargarEscena(SceneManager.GetActiveScene().buildIndex + 4);
     }
 
     public void calibracion()
     {
         Debug.Log("Iniciando calibracion...");
-        StartCoroutine(CargarEscena(SceneManager.GetActiveScene().buildIndex + 5));
-    }
-
-    private IEnumerator CargarEscena(int sceneIndex)
-    {
-        Debug.Log("Cargando escena...");
-        yield return null; // Puedes agregar una espera si es necesario
-        Debug.Log("Cargando escena: " + sceneIndex);
-        SceneManager.LoadScene(sceneIndex);
+        pantallaDeCarga.CargarEscena(SceneManager.GetActiveScene().buildIndex + 5);
     }
 }
